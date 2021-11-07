@@ -115,7 +115,7 @@ public class Bienvenida extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Programacion 3");
+        jLabel13.setText("Dev");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/fondolgo.png"))); // NOI18N
 
