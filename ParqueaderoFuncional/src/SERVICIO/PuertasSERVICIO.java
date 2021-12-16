@@ -5,9 +5,9 @@
  */
 package SERVICIO;
 
-import DAO.CodigodeCampusNoExisteException;
-import DAO.PuertaNoexisteException;
-import DAO.PuertasDAO;
+import DATO.CodigodeCampusNoExisteException;
+import DATO.PuertaNoexisteException;
+import DATO.PuertasDAO;
 import MODELO.Parqueadero;
 import MODELO.Portero;
 import MODELO.Puerta;
@@ -228,7 +228,7 @@ public class PuertasSERVICIO {
     */
    private boolean puertaOcupada(String codigo){
        boolean valor=false;
-       List<Parqueadero> listap=new ArrayList<Parqueadero>(CampusSERVICIO.getInstancia().getCampus().getParqueaderos().values());
+       List<Parqueadero> listap=new ArrayList<Parqueadero>(EmpresaSERVICIO.getInstancia().getCampus().getParqueaderos().values());
        for(Parqueadero p:listap){
            List<Puerta> listpuertas=p.getPuertas();
            for(Puerta pu:listpuertas){

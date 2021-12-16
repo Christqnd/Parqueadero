@@ -5,15 +5,16 @@
  */
 package GUI;
 
-import DAO.CampusNoExisteException;
-import DAO.UsuarioNoExisteException;
-import MODELO.Campus;
+import DATO.EmpresaNoExisteException;
+import DATO.UsuarioNoExisteException;
+import MODELO.Empresa;
 import MODELO.Parqueadero;
 import MODELO.Puerta;
-import SERVICIO.CampusSERVICIO;
+import SERVICIO.EmpresaSERVICIO;
 import SERVICIO.FacturaExistenteException;
 import SERVICIO.FechasErroneasException;
 import SERVICIO.TarjetaSERVICIO;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,7 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
      * Creates new form LectorTarjetaGUI
      */
     private TarjetaSERVICIO ts = TarjetaSERVICIO.getInstancia();
-    private CampusSERVICIO cs = CampusSERVICIO.getInstancia();
+    private EmpresaSERVICIO cs = EmpresaSERVICIO.getInstancia();
     private String modoVentaja = "";
 
     public LectorTarjetaGUI() {
@@ -49,6 +50,8 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
         } catch (QueryExecutionException ex) {
             Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryParseException ex) {
+            Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -102,25 +105,23 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
 
         jButton1.setForeground(new java.awt.Color(0, 51, 153));
         jButton1.setText("Verificar");
-        jButton1.setOpaque(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(430, 50, 187, 23);
+        jButton1.setBounds(430, 50, 187, 22);
 
         jButton2.setForeground(new java.awt.Color(255, 51, 51));
         jButton2.setText("Atras");
-        jButton2.setOpaque(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(20, 240, 59, 23);
+        jButton2.setBounds(20, 240, 72, 22);
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(255, 255, 255), new java.awt.Color(255, 255, 255), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
         jPanel1.setOpaque(false);
@@ -234,7 +235,7 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(20, 90, 693, 136);
+        jPanel1.setBounds(20, 90, 693, 134);
 
         modoTXT.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         modoTXT.setForeground(new java.awt.Color(255, 255, 255));
@@ -281,6 +282,8 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
             Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FechasErroneasException ex) {
             Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -292,7 +295,7 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
         puertaTXT.setText("");
         try {
             String codCampus = (String) campusCMB.getSelectedItem();
-            Campus campus = cs.recuperarCampus(codCampus);
+            Empresa campus = cs.recuperarCampus(codCampus);
             System.out.println("campus" + campusCMB.getSelectedItem().toString());
             campusTXT.setText(campus.getNombre());
             parqueaderoCMB.addItem("");
@@ -300,7 +303,7 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
                 String next = iterator.next();
                 parqueaderoCMB.addItem(next);
             }
-        } catch (CampusNoExisteException ex) {
+        } catch (EmpresaNoExisteException ex) {
 //            Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryParseException ex) {
             Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -324,7 +327,7 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
                 puertaCBM.addItem(puerta.getCodigo());
             }
             System.out.println("seleccion de par: " + codParqueadero);
-        } catch (CampusNoExisteException ex) {
+        } catch (EmpresaNoExisteException ex) {
 //            Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryParseException ex) {
             Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -344,7 +347,7 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
             puertaTXT.setText("Número de puerta: " + puerta.getNumero()+" - Tipo: "+puerta.getTipoDePuerta().estadoPuerta()+" - Lugar: "+puerta.getUbicacion());
             System.out.println("seleccion de par: " + codParqueadero);
 
-        } catch (CampusNoExisteException ex) {
+        } catch (EmpresaNoExisteException ex) {
 //                Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryParseException ex) {
             Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -416,10 +419,10 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
     private javax.swing.JTextField puertaTXT;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarCampus() throws QueryExecutionException, QueryParseException {
+    private void cargarCampus() throws QueryExecutionException, QueryParseException, IOException {
         campusCMB.addItem("");
-        for (Iterator<Campus> iterator = cs.obtenerlistaCampus().iterator(); iterator.hasNext();) {
-            Campus next = iterator.next();
+        for (Iterator<Empresa> iterator = cs.obtenerlistaCampus().iterator(); iterator.hasNext();) {
+            Empresa next = iterator.next();
             campusCMB.addItem(next.getCodigo());
         }
     }

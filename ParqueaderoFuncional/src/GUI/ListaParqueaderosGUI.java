@@ -6,7 +6,7 @@
 package GUI;
 
 import MODELO.Parqueadero;
-import SERVICIO.CampusSERVICIO;
+import SERVICIO.EmpresaSERVICIO;
 import SERVICIO.ParqueaderosSERVICIO;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import javax.swing.table.JTableHeader;
  */
 public class ListaParqueaderosGUI extends javax.swing.JFrame {
 
-    CampusSERVICIO cs=CampusSERVICIO.getInstancia();
+    EmpresaSERVICIO cs=EmpresaSERVICIO.getInstancia();
     ParqueaderosSERVICIO ps=ParqueaderosSERVICIO.getInstancia();
     DefaultTableModel model1=new DefaultTableModel();
     /**
@@ -86,7 +86,7 @@ public class ListaParqueaderosGUI extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(537, 357));
         getContentPane().setLayout(null);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Listado de Parqueaderos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Listado de Parqueaderos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel2.setOpaque(false);
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));

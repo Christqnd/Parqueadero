@@ -5,13 +5,14 @@
  */
 package GUI;
 
-import DAO.CampusNoExisteException;
-import DAO.CodigodeCampusNoExisteException;
-import DAO.PuertasDAO;
-import MODELO.Campus;
-import SERVICIO.CampusSERVICIO;
+import DATO.EmpresaNoExisteException;
+import DATO.CodigodeCampusNoExisteException;
+import DATO.PuertasDAO;
+import MODELO.Empresa;
+import SERVICIO.EmpresaSERVICIO;
 import SERVICIO.PuertasSERVICIO;
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,16 +31,16 @@ import org.josql.QueryParseException;
  *
  * @author pablopc
  */
-public class ListaCampusGUI extends javax.swing.JFrame {
+public class ListaEmpresasGUI extends javax.swing.JFrame {
 
-    CampusSERVICIO cs = CampusSERVICIO.getInstancia();
+    EmpresaSERVICIO cs = EmpresaSERVICIO.getInstancia();
     private DefaultTableModel model1;
     int con = 0;
 
     /**
      * Creates new form ListaCampusGUI
      */
-    public ListaCampusGUI() {
+    public ListaEmpresasGUI() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/IMG/parking.png")).getImage());
         mostrarDatos();
@@ -47,7 +48,7 @@ public class ListaCampusGUI extends javax.swing.JFrame {
         this.con = 0;
     }
 
-    public void insertarDatos(Campus c) {
+    public void insertarDatos(Empresa c) {
         model1.insertRow(con, new Object[]{});
         model1.setValueAt(c.getCodigo(), con, 0);
         model1.setValueAt(c.getNombre(), con, 1);
@@ -80,15 +81,17 @@ public class ListaCampusGUI extends javax.swing.JFrame {
     public void mostrarDatos() {
         try {
             this.interfazTabla();
-            List<Campus> lista = new ArrayList();
+            List<Empresa> lista = new ArrayList();
             lista = cs.obtenerlistaCampus();
             for (int i = 0; i < lista.size(); i++) {
                 this.insertarDatos(lista.get(i));
             }
         } catch (QueryExecutionException ex) {
-            Logger.getLogger(ListaCampusGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListaEmpresasGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryParseException ex) {
-            Logger.getLogger(ListaCampusGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListaEmpresasGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ListaEmpresasGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -108,16 +111,13 @@ public class ListaCampusGUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listacampus = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
-        setMaximumSize(new java.awt.Dimension(430, 460));
         setMinimumSize(new java.awt.Dimension(430, 460));
-        setPreferredSize(new java.awt.Dimension(430, 460));
-        setSize(new java.awt.Dimension(430, 460));
+        setSize(new java.awt.Dimension(1005, 630));
         getContentPane().setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Listado de Campus", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Listado de Parqueaderos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel1.setOpaque(false);
 
         jButton5.setText("Agregar +");
@@ -179,11 +179,6 @@ public class ListaCampusGUI extends javax.swing.JFrame {
             listacampus.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Campus");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -192,47 +187,42 @@ public class ListaCampusGUI extends javax.swing.JFrame {
                 .addGap(61, 61, 61)
                 .addComponent(jButton5)
                 .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(jButton3)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 558, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(304, 304, 304)
-                            .addComponent(jButton2)))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
+                .addContainerGap(519, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton5)
                     .addComponent(jButton4)
-                    .addComponent(jButton3))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3)
+                        .addComponent(jButton2)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 39, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(11, 11, 11)
-                    .addComponent(jButton2)
-                    .addGap(0, 11, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(49, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 10, 390, 380);
+        jPanel1.setBounds(10, 10, 970, 570);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/fondo3.png"))); // NOI18N
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(-270, -130, 740, 610);
+        jLabel3.setBounds(0, 0, 990, 600);
 
         pack();
         setLocationRelativeTo(null);
@@ -268,7 +258,7 @@ public class ListaCampusGUI extends javax.swing.JFrame {
                 this.setVisible(false);
                 DatosCampusGUI dcg = new DatosCampusGUI();
                 dcg.setVisible(true);
-            } catch (CampusNoExisteException ex) {
+            } catch (EmpresaNoExisteException ex) {
                 JOptionPane.showMessageDialog(this, "Campus no Existe");
             } catch (CodigodeCampusNoExisteException ex) {
                 JOptionPane.showMessageDialog(this, "Campus codigo no Existe");
@@ -284,11 +274,11 @@ public class ListaCampusGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Seleccione un campus");
             } else {
                 String codigo = (String) this.listacampus.getValueAt(index, 0);
-                CampusSERVICIO.getInstancia().eliminarCampus(codigo);
+                EmpresaSERVICIO.getInstancia().eliminarCampus(codigo);
                 this.mostrarDatos();
                 this.con = 0;
             }
-        } catch (CampusNoExisteException ex) {
+        } catch (EmpresaNoExisteException ex) {
             JOptionPane.showMessageDialog(this, "El Campus se ha Eliminado");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -310,20 +300,21 @@ public class ListaCampusGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListaCampusGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListaCampusGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListaCampusGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListaCampusGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListaCampusGUI().setVisible(true);
+                new ListaEmpresasGUI().setVisible(true);
             }
         });
     }
@@ -333,7 +324,6 @@ public class ListaCampusGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

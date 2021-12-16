@@ -5,12 +5,12 @@
  */
 package GUI;
 
-import DAO.CampusRepetidoException;
-import DAO.PuertasDAO;
-import SERVICIO.CampusConNombreExistenteException;
-import SERVICIO.CampusSERVICIO;
-import SERVICIO.CampusSinPuertasException;
-import SERVICIO.Campusvacioexception;
+import DATO.EmpresaRepetidoException;
+import DATO.PuertasDAO;
+import SERVICIO.EmpresaConNombreExistenteException;
+import SERVICIO.EmpresaSERVICIO;
+import SERVICIO.EmpresaSinPuertasException;
+import SERVICIO.EmpresaVacioException;
 import SERVICIO.CodigosSERVICIO;
 import SERVICIO.NombreCampusInvalidoException;
 import SERVICIO.PuertasSERVICIO;
@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class DatosCampusGUI extends javax.swing.JFrame {
 
-    CampusSERVICIO cs = CampusSERVICIO.getInstancia();
+    EmpresaSERVICIO cs = EmpresaSERVICIO.getInstancia();
 
     public DatosCampusGUI() {
         initComponents();
@@ -51,7 +51,7 @@ public class DatosCampusGUI extends javax.swing.JFrame {
     }
 
     public void nombreExistente(int a) {
-        this.nombreCampusTXT.setText(CampusSERVICIO.getInstancia().getCampus().getNombre());
+        this.nombreCampusTXT.setText(EmpresaSERVICIO.getInstancia().getCampus().getNombre());
         if (a == 0) {
             this.puertabtn.setEnabled(true);
         } else if (a == 1) {
@@ -278,7 +278,7 @@ public class DatosCampusGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         cs.setModificar(false);
         this.setVisible(false);
-        ListaCampusGUI lcg = new ListaCampusGUI();
+        ListaEmpresasGUI lcg = new ListaEmpresasGUI();
         lcg.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -299,7 +299,7 @@ public class DatosCampusGUI extends javax.swing.JFrame {
             listaPuertasGUI.setVisible(true);
         } catch (NombreCampusInvalidoException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre de Campus");
-        } catch (CampusConNombreExistenteException ex) {
+        } catch (EmpresaConNombreExistenteException ex) {
             JOptionPane.showMessageDialog(this, "Ya existe un campus con nombre: " + this.nombreCampusTXT.getText());
         }
 
@@ -336,27 +336,27 @@ public class DatosCampusGUI extends javax.swing.JFrame {
                 // TODO add your handling code here:
                 cs.GuardarCampus(this.nombreCampusTXT.getText());
                 this.setVisible(false);
-                ListaCampusGUI lcg = new ListaCampusGUI();
+                ListaEmpresasGUI lcg = new ListaEmpresasGUI();
                 lcg.setVisible(true);
                 JOptionPane.showMessageDialog(this, "Campus Agregado Correctamente");
             } else {
                 cs.GuardarCampusModificado(this.nombreCampusTXT.getText());
                 cs.setModificar(false);
                 this.setVisible(false);
-                ListaCampusGUI lcg = new ListaCampusGUI();
+                ListaEmpresasGUI lcg = new ListaEmpresasGUI();
                 lcg.setVisible(true);
                 JOptionPane.showMessageDialog(this, "Campus Modificado Correctamente");
                 PuertasDAO.getInstancia().mostrar();
             }
-        } catch (CampusRepetidoException ex) {
+        } catch (EmpresaRepetidoException ex) {
             JOptionPane.showMessageDialog(this, "El campus ya existe");
-        } catch (CampusConNombreExistenteException ex) {
+        } catch (EmpresaConNombreExistenteException ex) {
             JOptionPane.showMessageDialog(this, "Ya existe un campus con nombre: " + this.nombreCampusTXT.getText());
-        } catch (Campusvacioexception ex) {
+        } catch (EmpresaVacioException ex) {
             JOptionPane.showMessageDialog(this, "No puede Crear un Campus sin parqueaderos");
         } catch (NombreCampusInvalidoException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre de Campus");
-        } catch (CampusSinPuertasException ex) {
+        } catch (EmpresaSinPuertasException ex) {
             JOptionPane.showMessageDialog(this, "No Puede Crear un Campus Sin Puertas");
         }
     }//GEN-LAST:event_jButton2ActionPerformed

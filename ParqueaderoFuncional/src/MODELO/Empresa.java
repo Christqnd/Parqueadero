@@ -12,13 +12,13 @@ import java.util.Map;
  *
  * @author gube
  */
-public class Campus implements java.io.Serializable{
+public class Empresa implements java.io.Serializable{
     private String nombre;
     private String codigo;
     private int Cant_puertas=0;
     private Map<String,Parqueadero> parqueaderos=new HashMap();
 
-    public Campus(String nombre, String codigo, int cant_puertas){
+    public Empresa(String nombre, String codigo, int cant_puertas){
         this.nombre = nombre;
         this.codigo = codigo;
         this.Cant_puertas=cant_puertas;

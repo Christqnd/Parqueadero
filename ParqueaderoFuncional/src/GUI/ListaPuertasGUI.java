@@ -5,10 +5,10 @@
  */
 package GUI;
 
-import DAO.CodigodeCampusNoExisteException;
-import DAO.PuertaNoexisteException;
+import DATO.CodigodeCampusNoExisteException;
+import DATO.PuertaNoexisteException;
 import MODELO.Puerta;
-import SERVICIO.CampusSERVICIO;
+import SERVICIO.EmpresaSERVICIO;
 import SERVICIO.PuertaAsignadaException;
 import SERVICIO.PuertasSERVICIO;
 import java.awt.Color;
@@ -29,7 +29,7 @@ import javax.swing.table.JTableHeader;
 public class ListaPuertasGUI extends javax.swing.JFrame {
 
     PuertasSERVICIO ps = PuertasSERVICIO.getInstancia();
-    CampusSERVICIO cs = CampusSERVICIO.getInstancia();
+    EmpresaSERVICIO cs = EmpresaSERVICIO.getInstancia();
     private DefaultTableModel model1;
     int con = 0;
 
@@ -41,7 +41,7 @@ public class ListaPuertasGUI extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/IMG/parking.png")).getImage());
         this.mostrarDatos();
         this.con = 0;
-        this.nombrecampuslbl.setText("Puertas de Campus: " + CampusSERVICIO.getInstancia().getCampus().getNombre());
+        this.nombrecampuslbl.setText("Puertas de Campus: " + EmpresaSERVICIO.getInstancia().getCampus().getNombre());
         alinearDatos(listapuertas, listapuertas.getColumnCount());
     }
 
@@ -112,7 +112,7 @@ public class ListaPuertasGUI extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(450, 385));
         getContentPane().setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Listado de Puertas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Listado de Puertas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel1.setOpaque(false);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));

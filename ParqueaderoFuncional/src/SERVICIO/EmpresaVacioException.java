@@ -9,9 +9,9 @@ package SERVICIO;
  *
  * @author gube
  */
-public class CampusSinPuertasException extends Exception {
+public class EmpresaVacioException extends Exception {
 
-    public CampusSinPuertasException() {
+    public EmpresaVacioException() {
     }
     
 }

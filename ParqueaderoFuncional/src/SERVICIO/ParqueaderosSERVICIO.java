@@ -183,7 +183,7 @@ public class ParqueaderosSERVICIO {
     }
 
     public void cargarParqueadero(String codigo) {
-        this.parqueadero=CampusSERVICIO.getInstancia().getCampus().obtener(codigo);
+        this.parqueadero=EmpresaSERVICIO.getInstancia().getCampus().obtener(codigo);
         List<Puerta> lista=this.parqueadero.getPuertas();
         PuertasSERVICIO.getInstancia().separarListas();
         int a=0;

@@ -5,9 +5,10 @@
  */
 package SERVICIO;
 
-import DAO.UsuarioNoExisteException;
+import DATO.UsuarioNoExisteException;
 import MODELO.Tarjeta;
 import MODELO.Usuario;
+import java.io.IOException;
 import java.util.Date;
 import org.josql.QueryExecutionException;
 import org.josql.QueryParseException;
@@ -41,15 +42,15 @@ public class TarjetaSERVICIO {
 
     }
 
-    public boolean comprovarDatos(String cedula, String codigoCampus, String codigoParqueadero, String codigoPuerta, String modo) throws QueryParseException, QueryExecutionException, UsuarioNoExisteException, FacturaExistenteException, FechasErroneasException {
-        Usuario usuario = new UsuarioSERVICIO().recuperarUsuario(cedula);
-        boolean b = usuario.getTarjeta().verificar(codigoCampus, codigoParqueadero,codigoPuerta, modo, new Date());
+    public boolean comprovarDatos(String id, String codigoCampus, String codigoParqueadero, String codigoPuerta, String modo) throws QueryParseException, QueryExecutionException, UsuarioNoExisteException, FacturaExistenteException, FechasErroneasException, IOException {
+        Usuario usuario = new UsuarioSERVICIO().recuperarUsuario(Long.parseLong(id));
+        boolean b = false;//usuario.getTarjeta().verificar(codigoCampus, codigoParqueadero,codigoPuerta, modo, new Date());
         if (modo.equals("salir") && b) {
-            if (!fs.existeFactura(cedula)) {
-                fs.crearFactura(usuario, usuario.getTarjeta().getRegistroIngreso(), usuario.getTarjeta().getRegistroSalida());
-            } else {
-                fs.agregarDetalleFactura(cedula, usuario.getTarjeta().getRegistroIngreso(), usuario.getTarjeta().getRegistroSalida());
-            }
+//            if (!fs.existeFactura(cedula)) {
+//                fs.crearFactura(usuario, usuario.getTarjeta().getRegistroIngreso(), usuario.getTarjeta().getRegistroSalida());
+//            } else {
+//                fs.agregarDetalleFactura(cedula, usuario.getTarjeta().getRegistroIngreso(), usuario.getTarjeta().getRegistroSalida());
+//            }
         }
         return b;
     }

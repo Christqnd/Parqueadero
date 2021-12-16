@@ -9,9 +9,9 @@ package SERVICIO;
  *
  * @author gube
  */
-public class CampusNombreRepetidoException extends Exception {
+public class EmpresaNombreRepetidoException extends Exception {
 
-    public CampusNombreRepetidoException() {
+    public EmpresaNombreRepetidoException() {
     }
     
 }

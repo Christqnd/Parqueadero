@@ -43,7 +43,7 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
             this.codigopuertalbl.setText(CodigosSERVICIO.getInstancia().generarCodigo("PU"));
             this.EntradaRB.setSelected(true);
             this.checkportero.setSelected(false);
-            this.activarportero(false);
+//            this.activarportero(false);
         } else {
             this.codigopuertalbl.setText(ps.getPuerta().getCodigo());
             this.ubicaciontxt.setText(ps.getPuerta().getUbicacion());
@@ -63,31 +63,29 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
             }
             if (ps.getPuerta().getPortero() != null) {
                 this.checkportero.setSelected(true);
-                this.activarportero(true);
-                this.cargarPortero(ps.getPuerta().getPortero());
+//                this.activarportero(true);
+//                this.cargarPortero(ps.getPuerta().getPortero());
             } else {
                 this.checkportero.setSelected(false);
-                this.activarportero(false);
+//                this.activarportero(false);
             }
         }
     }
 
-    public void activarportero(boolean b) {
-        this.nombrelbl.setEnabled(b);
-        this.apellidolbl.setEnabled(b);
-        this.cedulalbl.setEnabled(b);
-        this.nombreTXT.setEnabled(b);
-        this.ApellidoTXT.setEnabled(b);
-        this.cedulaTXT.setEnabled(b);
-
-    }
-
-    private void cargarPortero(Portero p) {
-        this.nombreTXT.setText(p.getNombre());
-        this.ApellidoTXT.setText(p.getApellido());
-        this.cedulaTXT.setText(p.getCedula());
-    }
-
+//    public void activarportero(boolean b) {
+//        this.nombrelbl.setEnabled(b);
+//        this.apellidolbl.setEnabled(b);
+//        this.cedulalbl.setEnabled(b);
+//        this.nombreTXT.setEnabled(b);
+//        this.ApellidoTXT.setEnabled(b);
+//        this.cedulaTXT.setEnabled(b);
+//
+//    }
+//    private void cargarPortero(Portero p) {
+//        this.nombreTXT.setText(p.getPrimerNombre());
+//        this.ApellidoTXT.setText(p.getPrimerApellido());
+//        this.cedulaTXT.setText(p.getCedula());
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -143,7 +141,7 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(210, 420, 75, 23);
+        jButton1.setBounds(210, 420, 76, 22);
 
         jButton2.setText("Aceptar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -152,7 +150,7 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(140, 420, 71, 23);
+        jButton2.setBounds(140, 420, 72, 22);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jPanel1.setOpaque(false);
@@ -251,7 +249,6 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
 
         EntradaRB.setForeground(new java.awt.Color(255, 255, 255));
         EntradaRB.setText("Entrada");
-        EntradaRB.setOpaque(false);
         EntradaRB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 EntradaRBItemStateChanged(evt);
@@ -275,7 +272,6 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
 
         SalidaRB.setForeground(new java.awt.Color(255, 255, 255));
         SalidaRB.setText("Salida");
-        SalidaRB.setOpaque(false);
         SalidaRB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 SalidaRBItemStateChanged(evt);
@@ -289,7 +285,6 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
 
         ESRB.setForeground(new java.awt.Color(255, 255, 255));
         ESRB.setText("Entrada / Salida");
-        ESRB.setOpaque(false);
         ESRB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 ESRBItemStateChanged(evt);

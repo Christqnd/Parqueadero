@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import DAO.UsuarioNoExisteException;
+import DATO.UsuarioNoExisteException;
 import MODELO.DetalleFactura;
 import MODELO.Factura;
 import MODELO.Usuario;
@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -69,6 +70,8 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         } catch (QueryExecutionException ex) {
             Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryParseException ex) {
+            Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -135,16 +138,16 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Datos de Usuarios Registrados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Datos de Usuarios Registrados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setOpaque(false);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DatosFactura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DatosFactura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.setOpaque(false);
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalles de Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalles de Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel5.setOpaque(false);
 
         listarDetallesFactura.setModel(new javax.swing.table.DefaultTableModel(
@@ -183,7 +186,7 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         );
 
         jPanel6.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel6.setOpaque(false);
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
@@ -356,7 +359,7 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         );
 
         jPanel7.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valor a pagar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valor a pagar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel7.setOpaque(false);
 
         jLabel9.setBackground(new java.awt.Color(204, 204, 204));
@@ -455,7 +458,7 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Usuario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.setOpaque(false);
 
@@ -495,7 +498,7 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Facturas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Facturas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
         jPanel4.setOpaque(false);
 
@@ -611,7 +614,7 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 11, 900, 402);
+        jPanel1.setBounds(10, 11, 900, 394);
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/fondo3.png"))); // NOI18N
         getContentPane().add(jLabel14);
@@ -623,10 +626,11 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
     private void listarFacturasUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listarFacturasUsuariosMouseClicked
         try {
             int fila = listarFacturasUsuarios.rowAtPoint(evt.getPoint());
-            String cedula = (String) listarFacturasUsuarios.getValueAt(fila, 0);
-            Usuario usuario = us.recuperarUsuario(cedula);
-            LinkedList<Factura> facturas = fs.recuperarFacturas(cedula);
-            cargarTablaFacturas(cedula, facturas);
+            String id = (String) listarFacturasUsuarios.getValueAt(fila, 0);
+            Usuario usuario = us.recuperarUsuario(Long.parseLong(id));
+//            LinkedList<Factura> facturas = fs.recuperarFacturas(cedula);
+            LinkedList<Factura> facturas = fs.recuperarFacturas("");
+//            cargarTablaFacturas(cedula, facturas);
         } catch (QueryParseException ex) {
             Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryExecutionException ex) {
@@ -634,6 +638,8 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         } catch (UsuarioNoExisteException ex) {
             Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
 //        }catch(NullPointerException ex){
+        } catch (IOException ex) {
+            Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_listarFacturasUsuariosMouseClicked
 
@@ -641,15 +647,18 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
 
         try {
             int fila = listarFacturas.rowAtPoint(evt.getPoint());
-            String cedula = (String) listarFacturas.getValueAt(fila, 1);
-            Usuario usuario = us.recuperarUsuario(cedula);
-            LinkedList<Factura> factura = fs.recuperarFacturas(cedula);
+            String id = (String) listarFacturas.getValueAt(fila, 1);
+            Usuario usuario = us.recuperarUsuario(Long.parseLong(id));
+//            LinkedList<Factura> factura = fs.recuperarFacturas(cedula);
+            LinkedList<Factura> factura = fs.recuperarFacturas("");
             cargarDetallesDeFacturas(usuario, factura.getFirst());
         } catch (QueryParseException ex) {
             Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryExecutionException ex) {
             Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UsuarioNoExisteException ex) {
+            Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(FacturasUsuariosGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_listarFacturasMouseClicked
@@ -664,12 +673,13 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         try {
             int fila = listarFacturas.getSelectedRow();
             if (fila != -1) {
-                String cedula = (String) modeloFacturas.getValueAt(fila, 1);
+                String id = (String) modeloFacturas.getValueAt(fila, 1);
                 String numeroFactura = (String) modeloFacturas.getValueAt(fila, 0);
 
                 SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                Usuario u = us.recuperarUsuario(cedula);
-                LinkedList<Factura> f = fs.recuperarFacturas(cedula);
+                Usuario u = us.recuperarUsuario(Long.parseLong(id));
+                LinkedList<Factura> f = fs.recuperarFacturas("");
+//                LinkedList<Factura> f = fs.recuperarFacturas(cedula);
 
                 com.itextpdf.text.Document document = new com.itextpdf.text.Document(PageSize.LETTER, 50, 50, 50, 50);
                 Image imagen, publicidad;
@@ -692,13 +702,13 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
                 document.add(new Paragraph("____________________________________________________________________________"));
                 document.add(new Paragraph("RUC: 0102030405067 "));
                 document.add(new Paragraph("Numero Fact: 00000" + numeroFactura));
-                document.add(new Paragraph("Cliente : " + u.getNombre() + " " + u.getApellido()));
+                document.add(new Paragraph("Cliente : " + u.getPrimerNombre() + " " + u.getPrimerApellido()));
                 document.add(new Paragraph("N° de cédula : " + u.getCedula()));
                 document.add(new Paragraph("Fecha : " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date())));
                 document.add(new Paragraph("____________________________________________________________________________"));
-                document.add(new Paragraph("Placas : " + u.getVehiculo().getPlaca()));
-                document.add(new Paragraph("Marca : " + u.getVehiculo().getMarca()));
-                document.add(new Paragraph("Modelo : " + u.getVehiculo().getModelo()));
+                document.add(new Paragraph("Placas : asd"));// + u.getVehiculo().getPlaca()));
+                document.add(new Paragraph("Marca : ")); //+ u.getVehiculo().getMarca()));
+                document.add(new Paragraph("Modelo : ")); //+ u.getVehiculo().getModelo()));
                 document.add(new Paragraph("____________________________________________________________________________"));
                 document.add(new Paragraph("| Nº |    FECHA Y HORA DE ENTRADA    |    FECHA Y HORA DE SALIDA    |      TIEMPO       |"));
                 for (int i = 0; i < f.get(fila).getListaDetalleFacturas().size(); i++) {
@@ -806,14 +816,14 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
     private javax.swing.JTextField totalTXT;
     // End of variables declaration//GEN-END:variables
 
-    private void presentarUsuariosFacturas() throws UsuarioNoExisteException, QueryExecutionException, QueryParseException {
+    private void presentarUsuariosFacturas() throws UsuarioNoExisteException, QueryExecutionException, QueryParseException, IOException {
         limpiarUsuariosFacturas();
         limpiarDetallesDeFacturas();
         List<Usuario> usuarios = us.recuperarUsuarios();
         for (Iterator<Usuario> usu = usuarios.iterator(); usu.hasNext();) {
             Usuario u = usu.next();
             if (fs.existeFactura(u.getCedula())) {
-                modeloUsuarioFacturas.addRow(new Object[]{u.getCedula(), u.getNombre(), u.getApellido(), u.getTelefono()});
+                modeloUsuarioFacturas.addRow(new Object[]{u.getCedula(), u.getPrimerNombre(), u.getPrimerApellido(), u.getTelefono()});
             }
         }
     }
@@ -848,13 +858,19 @@ public class FacturasUsuariosGUI extends javax.swing.JFrame {
         //presenta los datos del usuario en el formulario ademas de los detalles de factura como tambien el total
         fechaTXT.setText(new SimpleDateFormat("dd/MM/yyyy").format(factura.getTiempo()));
         horaTXT.setText(new SimpleDateFormat("HH:mm:ss").format(factura.getTiempo()));
-        nombresTXT.setText(usuario.getNombre());
-        apellidosTXT.setText(usuario.getApellido());
+        nombresTXT.setText(usuario.getPrimerNombre());
+        apellidosTXT.setText(usuario.getPrimerApellido());
         cedulaTXT.setText(usuario.getCedula());
         telefonoTXT.setText(usuario.getTelefono());
-        placasTXT.setText(usuario.getVehiculo().getPlaca());
-        marcaTXT.setText(usuario.getVehiculo().getMarca());
-        modeloTXT.setText(usuario.getVehiculo().getModelo());
+        placasTXT.setText(//usuario.getVehiculo().getPlaca()
+        ""
+        );
+        marcaTXT.setText(
+        "" //usuario.getVehiculo().getMarca()
+        );
+        modeloTXT.setText(
+               "" //usuario.getVehiculo().getModelo()
+        );
         subtotalTXT.setText(Double.toString(redondear(factura.getSubtotal(), 2)));
         ivaTXT.setText(Double.toString(redondear(factura.getIva(), 2)));
         totalTXT.setText(Double.toString(redondear(factura.getTotal(), 2)));

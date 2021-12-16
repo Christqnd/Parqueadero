@@ -9,9 +9,9 @@ package SERVICIO;
  *
  * @author gube
  */
-public class CampusConNombreExistenteException extends Exception {
+public class EmpresaConNombreExistenteException extends Exception {
 
-    public CampusConNombreExistenteException() {
+    public EmpresaConNombreExistenteException() {
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.awt.Dimension;
 import javax.swing.ImageIcon;
 
 /**
@@ -19,6 +20,7 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
     public ParqueaderoMAINGUI() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/IMG/parking.png")).getImage());
+//        jLabel6.setBounds(0,0,this.getSize().width,this.getSize().height);
     }
 
     /**
@@ -43,19 +45,26 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jToolBar1.setRollover(true);
 
-        setResizable(false);
         setType(java.awt.Window.Type.POPUP);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
 
-        pnfondo.setBackground(new java.awt.Color(126, 113, 140));
-        pnfondo.setFocusable(false);
+        pnfondo.setBackground(new java.awt.Color(4, 6, 28));
+        pnfondo.setToolTipText("");
+        pnfondo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnfondo.setInheritsPopupMenu(true);
+        pnfondo.setMaximumSize(new java.awt.Dimension(0, 0));
         pnfondo.setName(""); // NOI18N
+        pnfondo.setPreferredSize(new java.awt.Dimension(0, 0));
 
         jTabbedPane1.setBackground(new java.awt.Color(0, 0, 0));
         jTabbedPane1.setForeground(new java.awt.Color(0, 204, 0));
@@ -63,8 +72,6 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.setOpaque(false);
         jPanel1.setLayout(null);
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
@@ -78,7 +85,6 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setIconTextGap(2);
-        jButton2.setOpaque(false);
         jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/parqueadero1.png"))); // NOI18N
         jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/parqueadero3.png"))); // NOI18N
         jButton2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -89,7 +95,7 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(120, 30, 120, 80);
+        jButton2.setBounds(490, 200, 120, 80);
 
         jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -101,7 +107,6 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setIconTextGap(2);
-        jButton3.setOpaque(false);
         jButton3.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/usuario1.png"))); // NOI18N
         jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/usuario3.png"))); // NOI18N
         jButton3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -112,7 +117,7 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton3);
-        jButton3.setBounds(330, 30, 90, 80);
+        jButton3.setBounds(170, 210, 90, 80);
 
         jButton8.setBackground(new java.awt.Color(204, 204, 204));
         jButton8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -125,7 +130,6 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
         jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton8.setIconTextGap(2);
-        jButton8.setOpaque(false);
         jButton8.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/facturar1.png"))); // NOI18N
         jButton8.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/facturar3.png"))); // NOI18N
         jButton8.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -136,17 +140,20 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton8);
-        jButton8.setBounds(240, 120, 70, 80);
+        jButton8.setBounds(890, 200, 70, 80);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/fondo6.png"))); // NOI18N
-        jLabel6.setText("jLabel6");
+        jLabel6.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setToolTipText("");
+        jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel6.setName(""); // NOI18N
+        jLabel6.setOpaque(true);
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(-36, -84, 630, 520);
+        jLabel6.setBounds(0, 0, 1200, 500);
 
         jTabbedPane1.addTab("      Administrador      ", new javax.swing.ImageIcon(getClass().getResource("/IMG/icono_Admin.png")), jPanel1); // NOI18N
 
-        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel2.setOpaque(false);
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
         jPanel2.setLayout(null);
 
         jButton5.setBackground(new java.awt.Color(204, 204, 204));
@@ -159,7 +166,6 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
         jButton5.setContentAreaFilled(false);
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setOpaque(false);
         jButton5.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/entrar1.png"))); // NOI18N
         jButton5.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/entrar3.png"))); // NOI18N
         jButton5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -170,7 +176,7 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButton5);
-        jButton5.setBounds(200, 10, 150, 100);
+        jButton5.setBounds(280, 210, 150, 100);
 
         jButton6.setBackground(new java.awt.Color(204, 204, 204));
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -181,7 +187,6 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
         jButton6.setBorderPainted(false);
         jButton6.setContentAreaFilled(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setOpaque(false);
         jButton6.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/salir1.png"))); // NOI18N
         jButton6.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/salir3.png"))); // NOI18N
         jButton6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
@@ -192,11 +197,15 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButton6);
-        jButton6.setBounds(200, 110, 150, 100);
+        jButton6.setBounds(630, 210, 150, 100);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/fondo6.png"))); // NOI18N
+        jLabel7.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setToolTipText("");
+        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel7.setOpaque(true);
         jPanel2.add(jLabel7);
-        jLabel7.setBounds(-34, -81, 630, 510);
+        jLabel7.setBounds(0, 0, 1190, 500);
 
         jTabbedPane1.addTab("          Usuario           ", new javax.swing.ImageIcon(getClass().getResource("/IMG/icono_vehi.png")), jPanel2); // NOI18N
 
@@ -219,65 +228,64 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Sistema de parqueadero. Proyecto de programacion 3. Universidad de Cuenca");
-
         jLabel2.setFont(new java.awt.Font("Bachelor Pad Condensed JL", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(13, 221, 10));
-        jLabel2.setText("Universidad de Cuenca");
+        jLabel2.setText("Sistema de Parqueadero ");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/logohd.png"))); // NOI18N
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/fondo6.png"))); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Appware  ");
+        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout pnfondoLayout = new javax.swing.GroupLayout(pnfondo);
         pnfondo.setLayout(pnfondoLayout);
         pnfondoLayout.setHorizontalGroup(
             pnfondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnfondoLayout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jLabel2))
-            .addGroup(pnfondoLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(pnfondoLayout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(pnfondoLayout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(pnfondoLayout.createSequentialGroup()
-                .addGap(489, 489, 489)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnfondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnfondoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 665, Short.MAX_VALUE)
+                        .addComponent(jLabel3))
+                    .addGroup(pnfondoLayout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnfondoLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jTabbedPane1)))
+                .addGap(25, 25, 25))
         );
         pnfondoLayout.setVerticalGroup(
             pnfondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnfondoLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnfondoLayout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addComponent(jLabel2)
                 .addGap(11, 11, 11)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(136, 136, 136)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(pnfondoLayout.createSequentialGroup()
-                .addGap(357, 357, 357)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(pnfondoLayout.createSequentialGroup()
-                .addGap(377, 377, 377)
-                .addComponent(jButton4))
+                .addComponent(jTabbedPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnfondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnfondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnfondo, javax.swing.GroupLayout.DEFAULT_SIZE, 1232, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnfondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnfondo, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
 
         pack();
@@ -302,7 +310,7 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ListaCampusGUI lcgui = new ListaCampusGUI();
+        ListaEmpresasGUI lcgui = new ListaEmpresasGUI();
         this.setVisible(false);
         lcgui.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -316,6 +324,15 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
         new LectorTarjetaGUI("salir").setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+
+jLabel6.setBounds(0,0,this.getSize().width,this.getSize().height);
+jLabel6.repaint();
+jLabel7.setBounds(0,0,this.getSize().width,this.getSize().height);
+jLabel7.repaint();
+
+    }//GEN-LAST:event_formComponentResized
 
     /**
      * @param args the command line arguments
@@ -363,7 +380,6 @@ public class ParqueaderoMAINGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

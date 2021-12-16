@@ -5,8 +5,8 @@
  */
 package SERVICIO;
 
-import DAO.FacturaDAO;
-import DAO.UsuarioNoExisteException;
+import DATO.FacturaDAO;
+import DATO.UsuarioNoExisteException;
 import MODELO.DetalleFactura;
 import MODELO.Factura;
 import MODELO.FacturaPendiente;
@@ -25,9 +25,9 @@ public class FacturaSERVICIO {
 
     public boolean crearFactura(Usuario u, Date entrada, Date salida) throws FacturaExistenteException, FechasErroneasException, QueryParseException, QueryExecutionException, UsuarioNoExisteException {
         Date tiempo = new Date();
-        double total = u.getTarifa().obtenerTarifa() * 1.12;
-        double subtotal = u.getTarifa().obtenerTarifa();
-        double iva = u.getTarifa().obtenerTarifa() * 0.12;
+        double total = 0;//u.getTarifa().obtenerTarifa() * 1.12;
+        double subtotal =0;// u.getTarifa().obtenerTarifa();
+        double iva = 0;//u.getTarifa().obtenerTarifa() * 0.12;
         if (!validarFechas(entrada, salida)) {
             throw new FechasErroneasException("Las fechas no son correctas");
         }
@@ -70,12 +70,13 @@ public class FacturaSERVICIO {
 
     public void modificarDatosFactura(Usuario u) {
         Date tiempo = new Date();
-        double total = u.getTarifa().obtenerTarifa() * 1.12;
-        double subtotal = u.getTarifa().obtenerTarifa();
-        double iva = u.getTarifa().obtenerTarifa() * 0.12;
+        double total = 0;//u.getTarifa().obtenerTarifa() * 1.12;
+        double subtotal = 0;//u.getTarifa().obtenerTarifa();
+        double iva = 0;//u.getTarifa().obtenerTarifa() * 0.12;
         FacturaDAO.getInstancia().buscar(u.getCedula()).get(0).setTotal(total);
         FacturaDAO.getInstancia().buscar(u.getCedula()).get(0).setTiempo(tiempo);
         FacturaDAO.getInstancia().buscar(u.getCedula()).get(0).setSubtotal(subtotal);
         FacturaDAO.getInstancia().buscar(u.getCedula()).get(0).setIva(iva);
     }
+
 }

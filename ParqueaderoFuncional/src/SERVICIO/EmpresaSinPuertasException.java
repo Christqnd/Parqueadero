@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package SERVICIO;
 
 /**
  *
- * @author Christian Quinde <christian24091992@gmail.com>
+ * @author gube
  */
-public class UsuarioNoExisteException extends Exception {
+public class EmpresaSinPuertasException extends Exception {
 
-    public UsuarioNoExisteException(String string) {
-        super(string);
+    public EmpresaSinPuertasException() {
     }
-
+    
 }

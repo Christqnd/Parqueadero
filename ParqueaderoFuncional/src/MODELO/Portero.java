@@ -12,7 +12,7 @@ package MODELO;
 public class Portero extends Usuario implements java.io.Serializable {
 
     public Portero(String nombre, String apellido, String cedula, String telefono, Vehiculo vehiculo, Tarjeta tarjeta) {
-        super(nombre, apellido, cedula, telefono, vehiculo, tarjeta);
-        super.setTarifa(null);
+//        super(nombre, apellido, cedula, telefono, vehiculo, tarjeta);
+//        super.setTarifa(null);
     }
 }

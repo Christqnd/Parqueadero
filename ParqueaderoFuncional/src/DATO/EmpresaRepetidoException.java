@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package DATO;
 
 /**
  *
- * @author gube
+ * @author pablopc
  */
-public class PuertaNoexisteException extends Exception {
+public class EmpresaRepetidoException extends Exception {
 
-    public PuertaNoexisteException() {
+    public EmpresaRepetidoException(String string) {
     }
     
 }

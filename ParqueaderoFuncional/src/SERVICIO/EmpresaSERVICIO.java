@@ -5,12 +5,13 @@
  */
 package SERVICIO;
 
-import DAO.CampusDAO;
-import DAO.CampusNoExisteException;
-import DAO.CampusRepetidoException;
-import MODELO.Campus;
+import DATO.EmpresaDAO;
+import DATO.EmpresaNoExisteException;
+import DATO.EmpresaRepetidoException;
+import MODELO.Empresa;
 import MODELO.Parqueadero;
 import MODELO.Puerta;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,36 +24,37 @@ import org.josql.QueryParseException;
  *
  * @author pablopc
  */
-public class CampusSERVICIO {
+public class EmpresaSERVICIO {
 
     private boolean modificar = false;
 
-    private Campus campus = null;
+    private Empresa campus = null;
 
-    private static CampusSERVICIO instancia = null;
+    private static EmpresaSERVICIO instancia = null;
 
-    private CampusSERVICIO() {
+    private EmpresaSERVICIO() {
     }
 
-    public static CampusSERVICIO getInstancia() {
+    public static EmpresaSERVICIO getInstancia() {
         if (instancia == null) {
-            instancia = new CampusSERVICIO();
+            instancia = new EmpresaSERVICIO();
         }
         return instancia;
     }
 
-    public List<Campus> obtenerlistaCampus() throws QueryExecutionException, QueryParseException {
-        return CampusDAO.getInstancia().obtenerListaCampus("nombre");
+    public List<Empresa> obtenerlistaCampus() throws QueryExecutionException, QueryParseException, IOException {
+//        return CampusDAO.getInstancia().obtenerListaCampus("nombre");
+        return EmpresaDAO.getInstancia().obtenerListaCampus();
     }
 
-    public void crearCampus(String codigo, String nombre, int cant_puertas) throws NombreCampusInvalidoException, CampusConNombreExistenteException {
-        if (CampusDAO.getInstancia().buscarPor(nombre)) {
-            throw new CampusConNombreExistenteException();
+    public void crearCampus(String codigo, String nombre, int cant_puertas) throws NombreCampusInvalidoException, EmpresaConNombreExistenteException {
+        if (EmpresaDAO.getInstancia().buscarPor(nombre)) {
+            throw new EmpresaConNombreExistenteException();
         }
         if (nombre.length() == 0 || nombre == null) {
             throw new NombreCampusInvalidoException();
         }
-        this.campus = new Campus(nombre, codigo, cant_puertas);
+        this.campus = new Empresa(nombre, codigo, cant_puertas);
     }
 
     public void modificarCampus(String codigo, String nombre) throws NombreCampusInvalidoException {
@@ -62,25 +64,25 @@ public class CampusSERVICIO {
         this.campus.setNombre(nombre);
     }
 
-    public void GuardarCampus(String nombre) throws CampusRepetidoException, CampusConNombreExistenteException, Campusvacioexception, NombreCampusInvalidoException, CampusSinPuertasException {
+    public void GuardarCampus(String nombre) throws EmpresaRepetidoException, EmpresaConNombreExistenteException, EmpresaVacioException, NombreCampusInvalidoException, EmpresaSinPuertasException {
 
         if (nombre.length() == 0 || nombre == null) {
             throw new NombreCampusInvalidoException();
         }
         if (this.getCampus() == null) {
-            throw new Campusvacioexception();
+            throw new EmpresaVacioException();
         }
         if (PuertasSERVICIO.getInstancia().getListapuertas().isEmpty()) {
-            throw new CampusSinPuertasException();
+            throw new EmpresaSinPuertasException();
         }
         if (this.campus.getParqueaderos().isEmpty()) {
-            throw new Campusvacioexception();
+            throw new EmpresaVacioException();
         }
-        if (CampusDAO.getInstancia().buscarPor(this.getCampus().getNombre())) {
-            throw new CampusConNombreExistenteException();
+        if (EmpresaDAO.getInstancia().buscarPor(this.getCampus().getNombre())) {
+            throw new EmpresaConNombreExistenteException();
         }
         this.campus.setCant_puertas(PuertasSERVICIO.getInstancia().getListapuertas().size());
-        CampusDAO.getInstancia().guardar(getCampus());
+        EmpresaDAO.getInstancia().guardar(getCampus());
         PuertasSERVICIO.getInstancia().GuardarPuertas(this.campus.getCodigo());
         this.campus = null;
         PuertasSERVICIO.getInstancia().getListapuertas().clear();
@@ -91,22 +93,22 @@ public class CampusSERVICIO {
     public void eliminarparqueadero(String codigo){
         this.campus.getParqueaderos().remove(codigo);
     }
-    public void GuardarCampusModificado(String nombre) throws NombreCampusInvalidoException, Campusvacioexception, CampusSinPuertasException {
+    public void GuardarCampusModificado(String nombre) throws NombreCampusInvalidoException, EmpresaVacioException, EmpresaSinPuertasException {
         if (nombre.length() == 0 || nombre == null) {
             throw new NombreCampusInvalidoException();
         }
         if (this.getCampus() == null) {
-            throw new Campusvacioexception();
+            throw new EmpresaVacioException();
         }
         if (PuertasSERVICIO.getInstancia().getListapuertas().isEmpty()) {
-            throw new CampusSinPuertasException();
+            throw new EmpresaSinPuertasException();
         }
         if (this.campus.getParqueaderos().isEmpty()) {
-            throw new Campusvacioexception();
+            throw new EmpresaVacioException();
         }
 
         this.campus.setCant_puertas(PuertasSERVICIO.getInstancia().getListapuertas().size());
-        CampusDAO.getInstancia().guardarModificado(this.campus);
+        EmpresaDAO.getInstancia().guardarModificado(this.campus);
         PuertasSERVICIO.getInstancia().guardarNuevasPuertas(this.campus.getCodigo());
 
         this.campus = null;
@@ -115,8 +117,8 @@ public class CampusSERVICIO {
     }
 
     
-    public void eliminarCampus(String codigo) throws CampusNoExisteException{
-        CampusDAO.getInstancia().eliminarCampus(codigo);
+    public void eliminarCampus(String codigo) throws EmpresaNoExisteException{
+        EmpresaDAO.getInstancia().eliminarCampus(codigo);
     }
     public void agregarParqueadero(Parqueadero p) {
         
@@ -136,20 +138,20 @@ public class CampusSERVICIO {
     /**
      * @return the campus
      */
-    public Campus getCampus() {
+    public Empresa getCampus() {
         return campus;
     }
 
-    public Campus recuperarCampus(String codigo) throws CampusNoExisteException, QueryParseException, QueryExecutionException {
-        return CampusDAO.getInstancia().obtener(codigo);
+    public Empresa recuperarCampus(String codigo) throws EmpresaNoExisteException, QueryParseException, QueryExecutionException {
+        return EmpresaDAO.getInstancia().obtener(codigo);
     }
 
-    public Parqueadero recuperarParqueaderoDeCampus(String codigoCampues, String codigoParqueadero) throws CampusNoExisteException, QueryParseException, QueryExecutionException {
-        return CampusDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(codigoParqueadero);
+    public Parqueadero recuperarParqueaderoDeCampus(String codigoCampues, String codigoParqueadero) throws EmpresaNoExisteException, QueryParseException, QueryExecutionException {
+        return EmpresaDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(codigoParqueadero);
     }
 
-    public Puerta recuperarParqueaderoDeCampusDePuerta(String codigoCampues, String codigoParqueadero,String codigoPuerta) throws CampusNoExisteException, QueryParseException, QueryExecutionException {
-        for (Iterator<Puerta> iterator = CampusDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(codigoParqueadero).getPuertas().iterator(); iterator.hasNext();) {
+    public Puerta recuperarParqueaderoDeCampusDePuerta(String codigoCampues, String codigoParqueadero,String codigoPuerta) throws EmpresaNoExisteException, QueryParseException, QueryExecutionException {
+        for (Iterator<Puerta> iterator = EmpresaDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(codigoParqueadero).getPuertas().iterator(); iterator.hasNext();) {
             Puerta next = iterator.next();
             if(next.getCodigo().equalsIgnoreCase(codigoPuerta))
                 return next;
@@ -158,9 +160,9 @@ public class CampusSERVICIO {
 //        CampusDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(codigoParqueadero);
     }
     
-    public void cargarCampus(String codigo) throws CampusNoExisteException {
+    public void cargarCampus(String codigo) throws EmpresaNoExisteException {
         try {
-            this.campus = CampusDAO.getInstancia().obtener(codigo);
+            this.campus = EmpresaDAO.getInstancia().obtener(codigo);
         } catch (QueryParseException ex) {
             System.out.println("Error josql QueryParseException");
         } catch (QueryExecutionException ex) {

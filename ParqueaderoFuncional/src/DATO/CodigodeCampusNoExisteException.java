@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SERVICIO;
+package DATO;
 
 /**
  *
- * @author gube
+ * @author pablopc
  */
-public class Campusvacioexception extends Exception {
+public class CodigodeCampusNoExisteException extends Exception {
 
-    public Campusvacioexception() {
+    public CodigodeCampusNoExisteException() {
     }
     
 }
