@@ -67,13 +67,13 @@ public class ParqueaderosSERVICIO {
      public void agregarPuertas(){
          List<Puerta> lista=new ArrayList<>();
         for(int i=0;i<puertasentrada.size();i++){
-            if(this.buscarPuerta(this.puertasentrada.get(i).getCodigo(), lista)<0){
+            if(this.buscarPuerta(this.puertasentrada.get(i).getIdPuerta().toString(), lista)<0){
                 lista.add(this.puertasentrada.get(i));
             }
         }
     
         for(int i=0;i<puertassalida.size();i++){
-            if(this.buscarPuerta(this.puertassalida.get(i).getCodigo(), lista)<0){
+            if(this.buscarPuerta(this.puertassalida.get(i).getIdPuerta().toString(), lista)<0){
                 lista.add(this.puertassalida.get(i));
             }
         }
@@ -84,8 +84,8 @@ public class ParqueaderosSERVICIO {
     public Puerta obtenerPuertaEntrada(String codigo){
         Puerta p = null;
         for(int i=0;i<this.puertasentrada.size();i++){
-            if(this.puertasentrada.get(i).getCodigo().equalsIgnoreCase(codigo)){
-                if(this.puertasentrada.get(i).getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")){
+            if(this.puertasentrada.get(i).getIdPuerta().equals(codigo)){
+                if(this.puertasentrada.get(i).getTipo().equalsIgnoreCase("entrada/salida")){
                     this.puertassalida.remove(this.buscarPuerta(codigo, puertassalida));
                 }
                 p=this.puertasentrada.get(i);
@@ -99,8 +99,8 @@ public class ParqueaderosSERVICIO {
         public Puerta obtenerPuertaSalida(String codigo){
         Puerta p = null;
         for(int i=0;i<this.puertassalida.size();i++){
-            if(this.puertassalida.get(i).getCodigo().equalsIgnoreCase(codigo)){
-                if(this.puertassalida.get(i).getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")){
+            if(this.puertassalida.get(i).getIdPuerta().equals(codigo)){
+                if(this.puertassalida.get(i).getTipo().equalsIgnoreCase("entrada/salida")){
                     this.puertasentrada.remove(this.buscarPuerta(codigo, puertasentrada));
                 }
                 p=this.puertassalida.get(i);
@@ -112,13 +112,13 @@ public class ParqueaderosSERVICIO {
     }
     public void agregarPuertaentrada(Puerta p){
         this.puertasentrada.add(p);
-        if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida"))
+        if(p.getTipo().equalsIgnoreCase("entrada/salida"))
             this.puertassalida.add(p);
     }  
 
     public void agregarPuertaSalida(Puerta p){
         this.puertassalida.add(p);
-        if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida"))
+        if(p.getTipo().equalsIgnoreCase("entrada/salida"))
             this.puertasentrada.add(p);
     }
     
@@ -126,7 +126,7 @@ public class ParqueaderosSERVICIO {
        public int buscarPuerta(String codigo,List<Puerta> lista){
        int valor=-1;
        for(int i=0;i<lista.size();i++){
-           if(lista.get(i).getCodigo().equalsIgnoreCase(codigo)){
+           if(lista.get(i).getIdPuerta().equals(codigo)){
                valor=i;
                i+=lista.size();
            }
@@ -183,29 +183,29 @@ public class ParqueaderosSERVICIO {
     }
 
     public void cargarParqueadero(String codigo) {
-        this.parqueadero=EmpresaSERVICIO.getInstancia().getCampus().obtener(codigo);
+//        this.parqueadero=EmpresaSERVICIO.getInstancia().getCampus().obtener(codigo);
         List<Puerta> lista=this.parqueadero.getPuertas();
         PuertasSERVICIO.getInstancia().separarListas();
         int a=0;
         for(Puerta p:lista){
             
-            if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada")){
+            if(p.getTipo().equalsIgnoreCase("entrada")){
                 this.agregarPuertaentrada(p);
-                PuertasSERVICIO.getInstancia().obtenerPuertaentrada(p.getCodigo());
+                PuertasSERVICIO.getInstancia().obtenerPuertaentrada(p.getIdPuerta().toString());
             }
-            else if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("salida")){
+            else if(p.getTipo().equalsIgnoreCase("salida")){
                 this.agregarPuertaSalida(p);
-                PuertasSERVICIO.getInstancia().obtenerPuertasalida(p.getCodigo());
+                PuertasSERVICIO.getInstancia().obtenerPuertasalida(p.getIdPuerta().toString());
             }
-            else if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")){
+            else if(p.getTipo().equalsIgnoreCase("entrada/salida")){
                 
                 if(a==0){                    
                     this.agregarPuertaSalida(p);                
-                    PuertasSERVICIO.getInstancia().obtenerPuertasalida(p.getCodigo());
+                    PuertasSERVICIO.getInstancia().obtenerPuertasalida(p.getIdPuerta().toString());
                     a=1;
                 }else if(a==1){
                     this.agregarPuertaentrada(p);
-                    PuertasSERVICIO.getInstancia().obtenerPuertaentrada(p.getCodigo());
+                    PuertasSERVICIO.getInstancia().obtenerPuertaentrada(p.getIdPuerta().toString());
                     a=0;
                 }
             }

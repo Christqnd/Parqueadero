@@ -37,7 +37,7 @@ public class PuertasDAO {
             lista.add(p);
             this.getPuertas().put(codcampus, lista);
         }
-        System.out.println("Puerta: "+p.getCodigo()+" Guardada en campus: "+codcampus);
+        System.out.println("Puerta: "+p.getIdPuerta()+" Guardada en campus: "+codcampus);
     }
     
    
@@ -70,7 +70,7 @@ public class PuertasDAO {
         
         int i=0;
         for(i=0;i<lista.size();i++){
-            if(lista.get(i).getCodigo().equals(codpuerta)){
+            if(lista.get(i).getIdPuerta().equals(codpuerta)){
                 i=lista.size();
             }
         }
@@ -85,7 +85,7 @@ public class PuertasDAO {
         List<Puerta> lista=this.obtenerPuertas(codcampus);
         List<Puerta> listareturn=new ArrayList();
         for(Puerta p:lista){
-            if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase(filtro)){
+            if(p.getTipo().equalsIgnoreCase(filtro)){
                 listareturn.add(p);
             }
         }
@@ -96,7 +96,7 @@ public class PuertasDAO {
         boolean valor=true;
         int i=0;
         while(valor){
-            if(lista.get(i).getCodigo().equalsIgnoreCase(codpuerta)){
+            if(lista.get(i).getIdPuerta().equals(codpuerta)){
                 valor=false;
             }
             i++;

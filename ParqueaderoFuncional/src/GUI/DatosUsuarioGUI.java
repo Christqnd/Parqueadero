@@ -502,7 +502,7 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
         );
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(11, 18, 664, 99);
+        jPanel2.setBounds(11, 18, 0, 0);
         jPanel2.getAccessibleContext().setAccessibleName("Usuario");
 
         pnlDetallesVehiculos.setBackground(new java.awt.Color(51, 51, 51));
@@ -683,19 +683,20 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
         jPanel3.getAccessibleContext().setAccessibleName("Vehiculo");
 
         jPanel1.add(pnlDetallesVehiculos);
-        pnlDetallesVehiculos.setBounds(11, 123, 664, 250);
+        pnlDetallesVehiculos.setBounds(11, 123, 0, 0);
 
         DatosPersonalesUsuario.getContentPane().add(jPanel1);
         jPanel1.setBounds(10, 11, 690, 440);
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/fondo3.png"))); // NOI18N
+        jLabel13.setRequestFocusEnabled(false);
         DatosPersonalesUsuario.getContentPane().add(jLabel13);
         jLabel13.setBounds(-10, -10, 730, 480);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(940, 490));
         setMinimumSize(new java.awt.Dimension(940, 490));
-        setPreferredSize(new java.awt.Dimension(940, 490));
+        setPreferredSize(new java.awt.Dimension(1030, 550));
         setSize(new java.awt.Dimension(940, 490));
         getContentPane().setLayout(null);
 
@@ -713,7 +714,7 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
             }
         });
         jPanel10.add(btnAgregarUsuario);
-        btnAgregarUsuario.setBounds(30, 365, 120, 30);
+        btnAgregarUsuario.setBounds(10, 430, 120, 30);
 
         btnModificarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/reload-32x32-1214297.png"))); // NOI18N
         btnModificarUsuario.setText("Modificar");
@@ -724,7 +725,7 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
             }
         });
         jPanel10.add(btnModificarUsuario);
-        btnModificarUsuario.setBounds(170, 365, 120, 30);
+        btnModificarUsuario.setBounds(150, 430, 120, 30);
 
         btnEliminarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/minus-32x32-1214312.png"))); // NOI18N
         btnEliminarUsuario.setText("Eliminar");
@@ -734,7 +735,7 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
             }
         });
         jPanel10.add(btnEliminarUsuario);
-        btnEliminarUsuario.setBounds(310, 365, 120, 30);
+        btnEliminarUsuario.setBounds(290, 430, 120, 30);
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/login-32x32-1214657.png"))); // NOI18N
         btnSalir.setText("Salir");
@@ -744,7 +745,7 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
             }
         });
         jPanel10.add(btnSalir);
-        btnSalir.setBounds(780, 365, 88, 30);
+        btnSalir.setBounds(850, 430, 120, 30);
 
         jtblistaUsuarios.setAutoCreateRowSorter(true);
         jtblistaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
@@ -777,16 +778,16 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
         }
 
         jPanel10.add(jScrollPane4);
-        jScrollPane4.setBounds(29, 42, 834, 310);
+        jScrollPane4.setBounds(9, 32, 960, 380);
 
         getContentPane().add(jPanel10);
-        jPanel10.setBounds(20, 10, 880, 420);
+        jPanel10.setBounds(20, 10, 980, 480);
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/fondo3.png"))); // NOI18N
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(-10, -10, 940, 470);
+        jLabel10.setBounds(-10, -10, 1040, 520);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -918,7 +919,7 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
             int fila = listarParqueadero.rowAtPoint(evt.getPoint());
             codigoParqueadero = (String) listarParqueadero.getValueAt(fila, 0);
             System.out.println("cod par: " + codigoParqueadero);
-            cargarListaDePuertas(cs.recuperarParqueaderoDeCampus(codigoCampus, codigoParqueadero).getPuertas());
+            cargarListaDePuertas(cs.recuperarParqueaderoDeEmpresa(codigoCampus, codigoParqueadero).getPuertas());
         } catch (EmpresaNoExisteException ex) {
             Logger.getLogger(DatosUsuarioGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryParseException ex) {
@@ -1308,19 +1309,19 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
         LimpiarTablaCampuces();
         LimpiarTablaParqueadero();
         List<Empresa> lista = new ArrayList();
-        lista = cs.obtenerlistaCampus();
+        lista = cs.obtenerlistaEmpresa();
         for (int i = 0; i < lista.size(); i++) {
-            modeloCampus.addRow(new Object[]{lista.get(i).getCodigo(), lista.get(i).getNombre(), lista.get(i).getCant_puertas(), lista.get(i).getParqueaderos().size()});
+            modeloCampus.addRow(new Object[]{lista.get(i).getCodigo(), lista.get(i).getNombre(), lista.get(i).getNombre(), lista.get(i).getParqueaderos().size()});
         }
     }
 
     private void mostrarDatosParqueaderos(Empresa campus) {
         if (!campus.getParqueaderos().isEmpty()) {
-            for (Map.Entry<String, Parqueadero> conjunto : campus.getParqueaderos().entrySet()) {
-                String key = conjunto.getKey();
-                Parqueadero value = conjunto.getValue();
-                modeloParqueadero.addRow(new Object[]{key, value.getNumero(), value.getCapacidad(), value.getCapacidad() - value.getOcupados()});
-            }
+//            for (Map.Entry<String, Parqueadero> conjunto : campus.getParqueaderos().entrySet()) {
+//                String key = conjunto.getKey();
+//                Parqueadero value = conjunto.getValue();
+//                modeloParqueadero.addRow(new Object[]{key, value.getNumero(), value.getCapacidad(), value.getCapacidad() - value.getOcupados()});
+//            }
         }
     }
 
@@ -1334,7 +1335,7 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
     private void cargarListaDePuertasSeleccionadas(List<Puerta> puertas) {
 //        LimpiarTablaPuertasSeleccionadas();
         for (Puerta puerta : puertas) {
-            modeloPuertasSeleccionadas.addRow(new Object[]{puerta.getNumero(), puerta.getTipoDePuerta().estadoPuerta(), puerta.getUbicacion(), puerta.getPortero() == null ? " --- " : puerta.getPortero().getPrimerNombre() + " " + puerta.getPortero().getSegundoApellido()});
+            modeloPuertasSeleccionadas.addRow(new Object[]{puerta.getNumero(), puerta.getTipo(), puerta.getDescripcion(), " --- "});
         }
     }
 
@@ -1354,7 +1355,7 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
     private void cargarListaDePuertas(List<Puerta> puertas) {
         LimpiarTablaPuertas();
         for (Puerta puerta : puertas) {
-            modeloPuertas.addRow(new Object[]{puerta.getCodigo(), puerta.getNumero(), puerta.getTipoDePuerta().estadoPuerta(), puerta.getUbicacion(), puerta.getPortero() == null ? " --- " : puerta.getPortero().getPrimerNombre() + " " + puerta.getPortero().getPrimerApellido()});
+            modeloPuertas.addRow(new Object[]{puerta.getIdPuerta(), puerta.getNumero(), puerta.getTipo(), puerta.getDescripcion(), " --- "});
         }
     }
 
@@ -1417,7 +1418,7 @@ public class DatosUsuarioGUI extends javax.swing.JFrame {
             String key = conjunto.getKey();
             List<String> value = conjunto.getValue();
             for (int i = 0; i < value.size(); i++) {
-                modeloCampusSeleccionados.addRow(new Object[]{cs.recuperarCampus(key).getCodigo(), cs.recuperarCampus(key).getNombre(), cs.recuperarParqueaderoDeCampus(key, value.get(i)).getCodigo(), cs.recuperarParqueaderoDeCampus(key, value.get(i)).getNumero()});
+                modeloCampusSeleccionados.addRow(new Object[]{cs.recuperarEmpresa(key).getCodigo(), cs.recuperarEmpresa(key).getNombre(), cs.recuperarParqueaderoDeEmpresa(key, value.get(i)).getCodigo(), cs.recuperarParqueaderoDeEmpresa(key, value.get(i)).getNumero()});
             }
         }
     }

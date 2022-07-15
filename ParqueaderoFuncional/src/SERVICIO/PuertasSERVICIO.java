@@ -48,7 +48,7 @@ public class PuertasSERVICIO {
         if(!validarDatos(ubicacion))
             throw new UbicacionInvalidoException();
         
-        this.puerta=new Puerta(Integer.parseInt(numero), codigo, ubicacion);
+        this.puerta=new Puerta();
     }
     
 
@@ -57,8 +57,8 @@ public class PuertasSERVICIO {
         if(!validarDatos(ubicacion))
             throw new UbicacionInvalidoException();
         int index=this.buscarPuerta(codigo);
-        this.listapuertas.get(index).setUbicacion(ubicacion);
-        this.listapuertas.get(index).setPortero(p);
+//        this.listapuertas.get(index).setUbicacion(ubicacion);
+//        this.listapuertas.get(index).setPortero(p);
         StatePuerta sp = null;
         if(estado==1)
             sp=new PuertaEntrada();
@@ -66,15 +66,15 @@ public class PuertasSERVICIO {
             sp=new PuertaSalida();
         else if(estado==3)
             sp=new PuertaEntradaSalida();
-        this.listapuertas.get(index).setTipoDePuerta(sp);
+//        this.listapuertas.get(index).setTipoDePuerta(sp);
     }
     public void EstadoPuerta(int a){
         if(a==1)
-            this.puerta.setTipoDePuerta(new PuertaEntrada());
+            this.puerta.setTipo(new PuertaEntrada().estadoPuerta());
         else if(a==2)
-            this.puerta.setTipoDePuerta(new PuertaSalida());
+            this.puerta.setTipo(new PuertaSalida().estadoPuerta());
         else if(a==3)
-            this.puerta.setTipoDePuerta(new PuertaEntradaSalida());
+            this.puerta.setTipo(new PuertaEntradaSalida().estadoPuerta());
     }
     
     public void cargarPuerta(String codigopuerta) throws CodigodeCampusNoExisteException, PuertaNoexisteException{
@@ -87,7 +87,7 @@ public class PuertasSERVICIO {
         boolean valor=true;
         int i=0;
         while(valor){
-            if(lista.get(i).getCodigo().equalsIgnoreCase(codpuerta)){
+            if(lista.get(i).getIdPuerta().equals(codpuerta)){
                 valor=false;
             }
             i++;
@@ -152,7 +152,7 @@ public class PuertasSERVICIO {
     public void listaPuertasEntrada(){
         List lista=new ArrayList();
         for(Puerta p:this.listapuertas){
-            if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada") || p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("Entrada/Salida")){
+            if(p.getTipo().equalsIgnoreCase("entrada") || p.getTipo().equalsIgnoreCase("Entrada/Salida")){
                 lista.add(p);
             }
         }
@@ -162,7 +162,7 @@ public class PuertasSERVICIO {
     public void listaPuertasSalida(){
         List lista=new ArrayList();
         for(Puerta p:this.listapuertas){
-            if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("salida") || p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("Entrada/Salida")){
+            if(p.getTipo().equalsIgnoreCase("salida") || p.getTipo().equalsIgnoreCase("Entrada/Salida")){
                 lista.add(p);
             }
         }
@@ -172,8 +172,8 @@ public class PuertasSERVICIO {
    public Puerta obtenerPuertasalida(String codigo){
        Puerta p=null;       
        for(int i=0;i<this.listapuertasalida.size();i++){
-           if(this.listapuertasalida.get(i).getCodigo().equalsIgnoreCase(codigo)){
-               if(this.listapuertasalida.get(i).getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")){
+           if(this.listapuertasalida.get(i).getIdPuerta().equals(codigo)){
+               if(this.listapuertasalida.get(i).getTipo().equalsIgnoreCase("entrada/salida")){
                    this.listapuertasentrada.remove(this.buscarPuerta(codigo, this.listapuertasentrada));
                }
                p=this.listapuertasalida.get(i);
@@ -187,8 +187,8 @@ public class PuertasSERVICIO {
    public Puerta obtenerPuertaentrada(String codigo){
        Puerta p=null;
        for(int i=0;i<this.listapuertasentrada.size();i++){
-           if(this.listapuertasentrada.get(i).getCodigo().equalsIgnoreCase(codigo)){
-               if(this.listapuertasentrada.get(i).getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")){
+           if(this.listapuertasentrada.get(i).getIdPuerta().equals(codigo)){
+               if(this.listapuertasentrada.get(i).getTipo().equalsIgnoreCase("entrada/salida")){
                    this.listapuertasalida.remove(this.buscarPuerta(codigo, this.listapuertasalida));
                }
                p=this.listapuertasentrada.get(i);
@@ -201,14 +201,14 @@ public class PuertasSERVICIO {
    
    public void agregarPuertaEntrada(Puerta p){
        this.listapuertasentrada.add(p);
-       if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")){
+       if(p.getTipo().equalsIgnoreCase("entrada/salida")){
            this.listapuertasalida.add(p);
        }
    }
    
    public void agregarPuertaSalida(Puerta p){
        this.listapuertasalida.add(p);
-       if(p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")){
+       if(p.getTipo().equalsIgnoreCase("entrada/salida")){
            this.listapuertasentrada.add(p);
        }
    }
@@ -228,11 +228,11 @@ public class PuertasSERVICIO {
     */
    private boolean puertaOcupada(String codigo){
        boolean valor=false;
-       List<Parqueadero> listap=new ArrayList<Parqueadero>(EmpresaSERVICIO.getInstancia().getCampus().getParqueaderos().values());
+       List<Parqueadero> listap=new ArrayList<Parqueadero>(EmpresaSERVICIO.getInstancia().getEmpresa().getParqueaderos());
        for(Parqueadero p:listap){
            List<Puerta> listpuertas=p.getPuertas();
            for(Puerta pu:listpuertas){
-               if(pu.getCodigo().equalsIgnoreCase(codigo)){
+               if(pu.getIdPuerta().equals(codigo)){
                    valor=true;
                }
            }
@@ -244,7 +244,7 @@ public class PuertasSERVICIO {
    public int buscarPuerta(String codigo,List<Puerta> lista){
        int valor=0;
        for(int i=0;i<lista.size();i++){
-           if(lista.get(i).getCodigo().equalsIgnoreCase(codigo)){
+           if(lista.get(i).getIdPuerta().equals(codigo)){
                valor=i;
                i+=lista.size();
            }

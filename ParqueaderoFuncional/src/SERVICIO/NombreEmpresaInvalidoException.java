@@ -9,9 +9,9 @@ package SERVICIO;
  *
  * @author gube
  */
-public class NombreCampusInvalidoException extends Exception {
+public class NombreEmpresaInvalidoException extends Exception {
 
-    public NombreCampusInvalidoException() {
+    public NombreEmpresaInvalidoException() {
     }
     
 }

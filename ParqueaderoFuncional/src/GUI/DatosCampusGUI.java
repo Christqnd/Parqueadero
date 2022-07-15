@@ -7,13 +7,17 @@ package GUI;
 
 import DATO.EmpresaRepetidoException;
 import DATO.PuertasDAO;
+import MODELO.Empresa;
 import SERVICIO.EmpresaConNombreExistenteException;
 import SERVICIO.EmpresaSERVICIO;
 import SERVICIO.EmpresaSinPuertasException;
 import SERVICIO.EmpresaVacioException;
 import SERVICIO.CodigosSERVICIO;
-import SERVICIO.NombreCampusInvalidoException;
+import SERVICIO.NombreEmpresaInvalidoException;
 import SERVICIO.PuertasSERVICIO;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -30,33 +34,33 @@ public class DatosCampusGUI extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/IMG/parking.png")).getImage());
         if (!cs.isModificar()) {
             this.codigolbl.setText(CodigosSERVICIO.getInstancia().generarCodigo("CA"));
-            this.nombreCampusTXT.setText(null);
-            this.puertabtn.setEnabled(false);
+            this.txtNombreEmpresa.setText(null);
+            this.btnAgregarPuerta.setEnabled(false);
         } else {
-            this.codigolbl.setText(cs.getCampus().getCodigo());
-            this.nombreCampusTXT.setText(cs.getCampus().getNombre());
+            this.codigolbl.setText(cs.getEmpresa().getCodigo());
+            this.txtNombreEmpresa.setText(cs.getEmpresa().getNombre());
             this.notalbl.setText("");
         }
 
         if (PuertasSERVICIO.getInstancia().getListapuertas().isEmpty()) {
-            this.parqbtn.setEnabled(false);
+            this.btnAgregarParqueadero.setEnabled(true);
         }
         this.cantpuertaslbl.setText(Integer.toString(PuertasSERVICIO.getInstancia().getListapuertas().size()));
-        if (cs.getCampus() == null) {
+        if (cs.getEmpresa() == null) {
             this.cantparqlbl.setText(Integer.toString(0));
         } else {
-            this.cantparqlbl.setText(Integer.toString(cs.getCampus().getParqueaderos().size()));
+            this.cantparqlbl.setText(Integer.toString(cs.getEmpresa().getParqueaderos().size()));
         }
 
     }
 
     public void nombreExistente(int a) {
-        this.nombreCampusTXT.setText(EmpresaSERVICIO.getInstancia().getCampus().getNombre());
+        this.txtNombreEmpresa.setText(EmpresaSERVICIO.getInstancia().getEmpresa().getNombre());
         if (a == 0) {
-            this.puertabtn.setEnabled(true);
+            this.btnAgregarPuerta.setEnabled(true);
         } else if (a == 1) {
-            this.puertabtn.setEnabled(true);
-            this.parqbtn.setEnabled(true);
+            this.btnAgregarPuerta.setEnabled(true);
+            this.btnAgregarParqueadero.setEnabled(true);
         }
 
     }
@@ -70,28 +74,30 @@ public class DatosCampusGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         codigolbl = new javax.swing.JLabel();
         cantparqlbl = new javax.swing.JLabel();
-        parqbtn = new javax.swing.JButton();
-        puertabtn = new javax.swing.JButton();
+        btnAgregarParqueadero = new javax.swing.JButton();
+        btnAgregarPuerta = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         notalbl = new javax.swing.JLabel();
-        nombreCampusTXT = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnAceptarEmpresa = new javax.swing.JButton();
+        btnCancelarEmpresa = new javax.swing.JButton();
         cantpuertaslbl = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtNombreEmpresa = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescripcionEmpresa = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
+        txtPropietarioEmpresa = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
-        jButton3.setText("jButton3");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(520, 330));
-        setSize(new java.awt.Dimension(520, 330));
+        setPreferredSize(new java.awt.Dimension(813, 335));
+        setSize(new java.awt.Dimension(813, 335));
         getContentPane().setLayout(null);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -104,52 +110,35 @@ public class DatosCampusGUI extends javax.swing.JFrame {
         cantparqlbl.setForeground(new java.awt.Color(255, 255, 255));
         cantparqlbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cantparqlbl.setText("0");
-        cantparqlbl.setOpaque(true);
 
-        parqbtn.setText("Parqueaderos");
-        parqbtn.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarParqueadero.setText("Parqueaderos");
+        btnAgregarParqueadero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                parqbtnActionPerformed(evt);
+                btnAgregarParqueaderoActionPerformed(evt);
             }
         });
 
-        puertabtn.setText("Puertas");
-        puertabtn.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarPuerta.setText("Puertas");
+        btnAgregarPuerta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                puertabtnActionPerformed(evt);
+                btnAgregarPuertaActionPerformed(evt);
             }
         });
 
         notalbl.setForeground(new java.awt.Color(255, 0, 0));
-        notalbl.setText("Para crear un Campus debe tener al menos 1 Parqueadero");
+        notalbl.setText("Para crear una Empresa debe tener al menos 1 Parqueadero");
 
-        nombreCampusTXT.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptarEmpresa.setText("Aceptar");
+        btnAceptarEmpresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nombreCampusTXTActionPerformed(evt);
-            }
-        });
-        nombreCampusTXT.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                nombreCampusTXTPropertyChange(evt);
-            }
-        });
-        nombreCampusTXT.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                nombreCampusTXTKeyReleased(evt);
+                btnAceptarEmpresaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Aceptar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelarEmpresa.setText("Cancelar");
+        btnCancelarEmpresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCancelarEmpresaActionPerformed(evt);
             }
         });
 
@@ -157,209 +146,294 @@ public class DatosCampusGUI extends javax.swing.JFrame {
         cantpuertaslbl.setForeground(new java.awt.Color(255, 255, 255));
         cantpuertaslbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cantpuertaslbl.setText("0");
-        cantpuertaslbl.setOpaque(true);
 
         jLabel3.setBackground(new java.awt.Color(204, 204, 204));
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Codigo:");
-        jLabel3.setOpaque(true);
+        jLabel3.setPreferredSize(new java.awt.Dimension(65, 16));
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Nombre:");
-        jLabel2.setOpaque(true);
+        jLabel2.setPreferredSize(new java.awt.Dimension(65, 16));
 
         jLabel1.setBackground(new java.awt.Color(204, 204, 204));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Datos Campus");
-        jLabel1.setOpaque(true);
+        jLabel1.setText("Datos Empresa");
+
+        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("Descripción:");
+
+        txtNombreEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreEmpresaActionPerformed(evt);
+            }
+        });
+        txtNombreEmpresa.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtNombreEmpresaPropertyChange(evt);
+            }
+        });
+        txtNombreEmpresa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreEmpresaKeyReleased(evt);
+            }
+        });
+
+        txtDescripcionEmpresa.setColumns(20);
+        txtDescripcionEmpresa.setRows(5);
+        jScrollPane1.setViewportView(txtDescripcionEmpresa);
+
+        jLabel6.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel6.setText("Propietario:");
+        jLabel6.setPreferredSize(new java.awt.Dimension(65, 16));
+
+        txtPropietarioEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPropietarioEmpresaActionPerformed(evt);
+            }
+        });
+        txtPropietarioEmpresa.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtPropietarioEmpresaPropertyChange(evt);
+            }
+        });
+        txtPropietarioEmpresa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPropietarioEmpresaKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addComponent(codigolbl, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPropietarioEmpresa))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(84, 84, 84)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                                    .addComponent(txtNombreEmpresa))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnAceptarEmpresa)
+                                .addGap(6, 6, 6)
+                                .addComponent(btnCancelarEmpresa))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnAgregarParqueadero)
+                                    .addGap(34, 34, 34)
+                                    .addComponent(cantparqlbl, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnAgregarPuerta, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(34, 34, 34)
+                                    .addComponent(cantpuertaslbl, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(32, 32, 32))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(notalbl)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(codigolbl, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(318, 318, 318)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(13, 13, 13)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(notalbl)
-                            .addGap(4, 4, 4)
-                            .addComponent(jButton2)
-                            .addGap(6, 6, 6)
-                            .addComponent(jButton1))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(133, 133, 133)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(parqbtn)
-                                    .addGap(34, 34, 34)
-                                    .addComponent(cantparqlbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(puertabtn, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(34, 34, 34)
-                                    .addComponent(cantpuertaslbl, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(nombreCampusTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(80, 80, 80)))
-                    .addGap(14, 14, 14))
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(180, 180, 180)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(15, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(codigolbl)
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addGap(8, 8, 8)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codigolbl)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgregarPuerta)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(cantpuertaslbl)))
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgregarParqueadero)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(cantparqlbl))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAceptarEmpresa)
+                            .addComponent(btnCancelarEmpresa)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtPropietarioEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(notalbl)
+                .addGap(25, 25, 25))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(8, 8, 8)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabel3)
-                    .addGap(6, 6, 6)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addComponent(jLabel2))
-                        .addComponent(nombreCampusTXT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(29, 29, 29)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(puertabtn)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(4, 4, 4)
-                            .addComponent(cantpuertaslbl)))
-                    .addGap(11, 11, 11)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(parqbtn)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(4, 4, 4)
-                            .addComponent(cantparqlbl)))
-                    .addGap(14, 14, 14)
+                    .addGap(171, 171, 171)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(4, 4, 4)
-                            .addComponent(notalbl))
-                        .addComponent(jButton2)
-                        .addComponent(jButton1))
-                    .addContainerGap(30, Short.MAX_VALUE)))
+                    .addContainerGap(84, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(20, 20, 470, 250);
+        jPanel1.setBounds(20, 20, 760, 260);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/fondo3.png"))); // NOI18N
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(-4, -5, 510, 300);
+        jLabel4.setBounds(-4, -5, 810, 320);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCancelarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarEmpresaActionPerformed
         // TODO add your handling code here:
         cs.setModificar(false);
         this.setVisible(false);
-        ListaEmpresasGUI lcg = new ListaEmpresasGUI();
+        DatosEmpresasGUI lcg = new DatosEmpresasGUI();
         lcg.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCancelarEmpresaActionPerformed
 
-    private void puertabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puertabtnActionPerformed
+    private void btnAgregarPuertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPuertaActionPerformed
         try {
             // TODO add your handling code here:
             String codigo = this.codigolbl.getText();
-            String nombre = this.nombreCampusTXT.getText();
+            String nombre = this.txtNombreEmpresa.getText();
             if (!cs.isModificar()) {
 
                 int cantpuertas = PuertasSERVICIO.getInstancia().getListapuertas().size();
-                cs.crearCampus(codigo, nombre, cantpuertas);
+//                cs.crearEmpresa(codigo, nombre, cantpuertas);
             } else {
-                cs.modificarCampus(codigo, nombre);
+                cs.modificarEmpresa(codigo, nombre);
             }
             ListaPuertasGUI listaPuertasGUI = new ListaPuertasGUI();
             this.setVisible(false);
             listaPuertasGUI.setVisible(true);
-        } catch (NombreCampusInvalidoException ex) {
+        } catch (NombreEmpresaInvalidoException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre de Campus");
-        } catch (EmpresaConNombreExistenteException ex) {
-            JOptionPane.showMessageDialog(this, "Ya existe un campus con nombre: " + this.nombreCampusTXT.getText());
-        }
+        } 
+//        catch (EmpresaConNombreExistenteException ex) {
+//            JOptionPane.showMessageDialog(this, "Ya existe un campus con nombre: " + this.txtNombreEmpresa.getText());
+//        }
 
 
-    }//GEN-LAST:event_puertabtnActionPerformed
+    }//GEN-LAST:event_btnAgregarPuertaActionPerformed
 
-    private void parqbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parqbtnActionPerformed
+    private void btnAgregarParqueaderoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarParqueaderoActionPerformed
         // TODO add your handling code here:
-        if (this.nombreCampusTXT.getText().length() == 0) {
+        if (this.txtNombreEmpresa.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre de Campus");
         } else {
             ListaParqueaderosGUI gUI = new ListaParqueaderosGUI();
             this.setVisible(false);
             gUI.setVisible(true);
         }
-    }//GEN-LAST:event_parqbtnActionPerformed
+    }//GEN-LAST:event_btnAgregarParqueaderoActionPerformed
 
-    private void nombreCampusTXTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreCampusTXTKeyReleased
-        // TODO add your handling code here:
-        this.puertabtn.setEnabled(this.nombreCampusTXT.getText().length() != 0 || this.nombreCampusTXT.getText() == null);
-    }//GEN-LAST:event_nombreCampusTXTKeyReleased
-
-    private void nombreCampusTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreCampusTXTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nombreCampusTXTActionPerformed
-
-    private void nombreCampusTXTPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_nombreCampusTXTPropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nombreCampusTXTPropertyChange
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAceptarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarEmpresaActionPerformed
         try {
             if (!cs.isModificar()) {
-                // TODO add your handling code here:
-                cs.GuardarCampus(this.nombreCampusTXT.getText());
+                Empresa  empresa= new Empresa( codigolbl.getText(), txtNombreEmpresa.getText(), txtDescripcionEmpresa.getText(), txtPropietarioEmpresa.getText(),  null);
+                
+                cs.crearEmpresa(empresa);
+//                cs.GuardarEmpresa(empresa);
+                
                 this.setVisible(false);
-                ListaEmpresasGUI lcg = new ListaEmpresasGUI();
+                DatosEmpresasGUI lcg = new DatosEmpresasGUI();
                 lcg.setVisible(true);
                 JOptionPane.showMessageDialog(this, "Campus Agregado Correctamente");
             } else {
-                cs.GuardarCampusModificado(this.nombreCampusTXT.getText());
+                cs.GuardarEmpresaModificado(this.txtNombreEmpresa.getText());
                 cs.setModificar(false);
                 this.setVisible(false);
-                ListaEmpresasGUI lcg = new ListaEmpresasGUI();
+                DatosEmpresasGUI lcg = new DatosEmpresasGUI();
                 lcg.setVisible(true);
                 JOptionPane.showMessageDialog(this, "Campus Modificado Correctamente");
                 PuertasDAO.getInstancia().mostrar();
             }
-        } catch (EmpresaRepetidoException ex) {
-            JOptionPane.showMessageDialog(this, "El campus ya existe");
+//        } catch (EmpresaRepetidoException ex) {
+//            JOptionPane.showMessageDialog(this, "El campus ya existe");
         } catch (EmpresaConNombreExistenteException ex) {
-            JOptionPane.showMessageDialog(this, "Ya existe un campus con nombre: " + this.nombreCampusTXT.getText());
+            JOptionPane.showMessageDialog(this, "Ya existe un campus con nombre: " + this.txtNombreEmpresa.getText());
         } catch (EmpresaVacioException ex) {
             JOptionPane.showMessageDialog(this, "No puede Crear un Campus sin parqueaderos");
-        } catch (NombreCampusInvalidoException ex) {
+        } catch (NombreEmpresaInvalidoException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre de Campus");
         } catch (EmpresaSinPuertasException ex) {
             JOptionPane.showMessageDialog(this, "No Puede Crear un Campus Sin Puertas");
+        } catch (EmpresaRepetidoException ex) {
+            Logger.getLogger(DatosCampusGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnAceptarEmpresaActionPerformed
+
+    private void txtNombreEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreEmpresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreEmpresaActionPerformed
+
+    private void txtNombreEmpresaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtNombreEmpresaPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreEmpresaPropertyChange
+
+    private void txtNombreEmpresaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreEmpresaKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreEmpresaKeyReleased
+
+    private void txtPropietarioEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPropietarioEmpresaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPropietarioEmpresaActionPerformed
+
+    private void txtPropietarioEmpresaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtPropietarioEmpresaPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPropietarioEmpresaPropertyChange
+
+    private void txtPropietarioEmpresaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPropietarioEmpresaKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPropietarioEmpresaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -400,22 +474,26 @@ public class DatosCampusGUI extends javax.swing.JFrame {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptarEmpresa;
+    private javax.swing.JButton btnAgregarParqueadero;
+    private javax.swing.JButton btnAgregarPuerta;
+    private javax.swing.JButton btnCancelarEmpresa;
     private javax.swing.JLabel cantparqlbl;
     private javax.swing.JLabel cantpuertaslbl;
     private javax.swing.JLabel codigolbl;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField nombreCampusTXT;
     private javax.swing.JLabel notalbl;
-    private javax.swing.JButton parqbtn;
-    private javax.swing.JButton puertabtn;
+    private javax.swing.JTextArea txtDescripcionEmpresa;
+    private javax.swing.JTextField txtNombreEmpresa;
+    private javax.swing.JTextField txtPropietarioEmpresa;
     // End of variables declaration//GEN-END:variables
 
 }

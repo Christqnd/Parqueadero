@@ -45,9 +45,9 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
             this.checkportero.setSelected(false);
 //            this.activarportero(false);
         } else {
-            this.codigopuertalbl.setText(ps.getPuerta().getCodigo());
-            this.ubicaciontxt.setText(ps.getPuerta().getUbicacion());
-            String estado = ps.getPuerta().getTipoDePuerta().estadoPuerta();
+            this.codigopuertalbl.setText(ps.getPuerta().getIdPuerta().toString());
+            this.ubicaciontxt.setText(ps.getPuerta().getDescripcion());
+            String estado = ps.getPuerta().getTipo();
             if (estado.equalsIgnoreCase("entrada")) {
                 this.EntradaRB.setSelected(true);
                 this.SalidaRB.setSelected(false);
@@ -61,14 +61,14 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
                 this.SalidaRB.setSelected(false);
                 this.ESRB.setSelected(true);
             }
-            if (ps.getPuerta().getPortero() != null) {
-                this.checkportero.setSelected(true);
+//            if (ps.getPuerta().getPortero() != null) {
+//                this.checkportero.setSelected(true);
 //                this.activarportero(true);
 //                this.cargarPortero(ps.getPuerta().getPortero());
-            } else {
+//            } else {
                 this.checkportero.setSelected(false);
 //                this.activarportero(false);
-            }
+//            }
         }
     }
 
@@ -611,7 +611,7 @@ public class DatosPuertasGUI extends javax.swing.JFrame {
 
             }
 
-            ps.getPuerta().setPortero(portero);
+//            ps.getPuerta().setPortero(portero);
             ps.agregarPuerta();
             this.setVisible(false);
             ListaPuertasGUI lpg = new ListaPuertasGUI();

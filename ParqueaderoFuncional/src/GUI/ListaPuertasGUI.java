@@ -41,21 +41,21 @@ public class ListaPuertasGUI extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/IMG/parking.png")).getImage());
         this.mostrarDatos();
         this.con = 0;
-        this.nombrecampuslbl.setText("Puertas de Campus: " + EmpresaSERVICIO.getInstancia().getCampus().getNombre());
+        this.nombrecampuslbl.setText("Puertas de Campus: " + EmpresaSERVICIO.getInstancia().getEmpresa().getNombre());
         alinearDatos(listapuertas, listapuertas.getColumnCount());
     }
 
     public void insertarDatos(Puerta c) {
         model1.insertRow(con, new Object[]{});
-        model1.setValueAt(c.getCodigo(), con, 0);
+        model1.setValueAt(c.getIdPuerta(), con, 0);
         model1.setValueAt(c.getNumero(), con, 1);
-        model1.setValueAt(c.getUbicacion(), con, 2);
-        model1.setValueAt(c.getTipoDePuerta().estadoPuerta(), con, 3);
-        if (c.getPortero() == null) {
+        model1.setValueAt(c.getDescripcion(), con, 2);
+        model1.setValueAt(c.getTipo(), con, 3);
+//        if (c.getPortero() == null) {
             model1.setValueAt("-", con, 4);
-        } else {
-            model1.setValueAt(c.getPortero().getCedula(), con, 4);
-        }
+//        } else {
+//            model1.setValueAt(c.getPortero().getCedula(), con, 4);
+//        }
         this.con++;
     }
 
@@ -256,7 +256,7 @@ public class ListaPuertasGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Seleccione una Puerta");
         } else {
             try {
-                String codigocampus = cs.getCampus().getCodigo();
+                String codigocampus = cs.getEmpresa().getCodigo();
                 String codigopuerta = (String) this.listapuertas.getValueAt(index, 0);
                 ps.setModificar(true);
                 ps.cargarPuerta(codigopuerta);

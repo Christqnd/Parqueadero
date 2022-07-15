@@ -295,13 +295,13 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
         puertaTXT.setText("");
         try {
             String codCampus = (String) campusCMB.getSelectedItem();
-            Empresa campus = cs.recuperarCampus(codCampus);
+            Empresa campus = cs.recuperarEmpresa(codCampus);
             System.out.println("campus" + campusCMB.getSelectedItem().toString());
             campusTXT.setText(campus.getNombre());
             parqueaderoCMB.addItem("");
-            for (Iterator<String> iterator = cs.recuperarCampus(codCampus).getParqueaderos().keySet().iterator(); iterator.hasNext();) {
-                String next = iterator.next();
-                parqueaderoCMB.addItem(next);
+            for (Iterator<Parqueadero> iterator = cs.recuperarEmpresa(codCampus).getParqueaderos().iterator(); iterator.hasNext();) {
+                Parqueadero next = iterator.next();
+                parqueaderoCMB.addItem(next.getIdParqueadero());
             }
         } catch (EmpresaNoExisteException ex) {
 //            Logger.getLogger(LectorTarjetaGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -320,11 +320,11 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
             String codCampus = (String) campusCMB.getSelectedItem();
             String codParqueadero = (String) parqueaderoCMB.getSelectedItem();
             puertaCBM.addItem("");
-            Parqueadero p = cs.recuperarParqueaderoDeCampus(codCampus, codParqueadero);
+            Parqueadero p = cs.recuperarParqueaderoDeEmpresa(codCampus, codParqueadero);
             parqueaderoTXT.setText("Parqueadero número: " + Integer.toString(p.getNumero())+" -  Lugares disponibles: "+(p.getCapacidad()-p.getOcupados()));
             for (Iterator<Puerta> iterator = p.getPuertas().iterator(); iterator.hasNext();) {
                 Puerta puerta = iterator.next();
-                puertaCBM.addItem(puerta.getCodigo());
+                puertaCBM.addItem(puerta.getIdParqueadero());
             }
             System.out.println("seleccion de par: " + codParqueadero);
         } catch (EmpresaNoExisteException ex) {
@@ -343,8 +343,8 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
             String codCampus = (String) campusCMB.getSelectedItem();
             String codParqueadero = (String) parqueaderoCMB.getSelectedItem();
             String codPuerta = (String) puertaCBM.getSelectedItem();
-            Puerta puerta = cs.recuperarParqueaderoDeCampusDePuerta(codCampus, codParqueadero, codPuerta);
-            puertaTXT.setText("Número de puerta: " + puerta.getNumero()+" - Tipo: "+puerta.getTipoDePuerta().estadoPuerta()+" - Lugar: "+puerta.getUbicacion());
+            Puerta puerta = cs.recuperarParqueaderoDeEmpresaDePuerta(codCampus, codParqueadero, codPuerta);
+            puertaTXT.setText("Número de puerta: " + puerta.getNumero()+" - Tipo: "+puerta.getTipo()+" - Descripcion: "+puerta.getDescripcion());
             System.out.println("seleccion de par: " + codParqueadero);
 
         } catch (EmpresaNoExisteException ex) {
@@ -421,7 +421,7 @@ public class LectorTarjetaGUI extends javax.swing.JFrame {
 
     private void cargarCampus() throws QueryExecutionException, QueryParseException, IOException {
         campusCMB.addItem("");
-        for (Iterator<Empresa> iterator = cs.obtenerlistaCampus().iterator(); iterator.hasNext();) {
+        for (Iterator<Empresa> iterator = cs.obtenerlistaEmpresa().iterator(); iterator.hasNext();) {
             Empresa next = iterator.next();
             campusCMB.addItem(next.getCodigo());
         }

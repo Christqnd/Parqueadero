@@ -34,9 +34,10 @@ public class ListaParqueaderosGUI extends javax.swing.JFrame {
     public ListaParqueaderosGUI() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/IMG/parking.png")).getImage());
-        this.nombrecampuslbl.setText("Parqueaderos de Campus: "+cs.getCampus().getNombre());
+//        this.nombrecampuslbl.setText("Parqueaderos de Campus: "+cs.getCampus().getNombre());
+        this.nombrecampuslbl.setText("Parqueaderos de Campus: as");
         model1=(DefaultTableModel) this.listaparq.getModel();
-        this.mostrarDatos();
+//        this.mostrarDatos();
         alinearDatos(listaparq, listaparq.getColumnCount());
         
     }

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -44,11 +45,64 @@ public class EmpresaDAO {
         return instancia;
     }
 
-    public void guardar(Empresa c) throws EmpresaRepetidoException {
-        if (this.buscar(c.getCodigo())) {
-            throw new EmpresaRepetidoException("El campus con codigo: " + c.getCodigo() + " ya existe");
+    public boolean guardar(Empresa e) throws EmpresaRepetidoException {
+//        if (this.buscar(e.getCodigo())) {
+//            throw new EmpresaRepetidoException("El campus con codigo: " + c.getCodigo() + " ya existe");
+//        }
+
+    try {
+
+            URL url = new URL(PropertyValues.getInstance().property.getUrlApiParkingGo() + "/empresas");//your url i.e fetch data from .
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+
+            String jsonInputString = usuario.toJSONCreate();
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                StringBuilder response = new StringBuilder();
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+                System.out.println(response.toString());
+            }
+
+            if (conn.getResponseCode() != 201) {
+                throw new RuntimeException("Failed : HTTP Error code : "
+                        + conn.getResponseCode());
+            }
+            conn.disconnect();
+
+        } catch (Exception e) {
+            System.out.println("Exception in NetClientGet:- " + e.getMessage());
         }
-        this.listacampus.add(c);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        this.listacampus.add(e);
     }
     
     public void guardarModificado(Empresa c){
@@ -108,7 +162,7 @@ public class EmpresaDAO {
         return valor;
     }
 
-    public List<Empresa> obtenerListaCampus(String filtro) throws QueryExecutionException, QueryParseException {
+    public List<Empresa> obtenerListaEmpresas(String filtro) throws QueryExecutionException, QueryParseException {
         List<Empresa> l = new ArrayList();
         String sql = "SELECT * FROM MODELO.Campus ORDER BY " + filtro;
         this.query.parse(sql);
@@ -122,10 +176,10 @@ public class EmpresaDAO {
         return l;
     }
     
-    public List<Empresa> obtenerListaCampus() throws QueryExecutionException, QueryParseException, IOException {
+    public List<Empresa> obtenerListaEmpresas() throws QueryExecutionException, QueryParseException, IOException {
         List<Empresa> l = new ArrayList();
 //         List<Usuario> l = new ArrayList();
-        URL url = new URL(PropertyValues.getInstance().property.getUrlApiParkingGo()+ "/usuarios/activos");//your url i.e fetch data from .
+        URL url = new URL(PropertyValues.getInstance().property.getUrlApiParkingGo()+ "/empresas/activas");//your url i.e fetch data from .
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "application/json");
@@ -143,8 +197,8 @@ public class EmpresaDAO {
                 for (final JsonNode objNode : jsonNode) {
                     System.out.println(objNode.toPrettyString());
                     byte[] jsonData = objNode.toString().getBytes();
-                    Empresa usuario = mapper.readValue(jsonData, Empresa.class);
-                    l.add(usuario);
+                    Empresa empresa = mapper.readValue(jsonData, Empresa.class);
+                    l.add(empresa);
                 }
             }
         }

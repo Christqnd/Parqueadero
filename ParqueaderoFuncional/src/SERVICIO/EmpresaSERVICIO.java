@@ -28,7 +28,7 @@ public class EmpresaSERVICIO {
 
     private boolean modificar = false;
 
-    private Empresa campus = null;
+    private Empresa empresa = null;
 
     private static EmpresaSERVICIO instancia = null;
 
@@ -42,127 +42,140 @@ public class EmpresaSERVICIO {
         return instancia;
     }
 
-    public List<Empresa> obtenerlistaCampus() throws QueryExecutionException, QueryParseException, IOException {
-//        return CampusDAO.getInstancia().obtenerListaCampus("nombre");
-        return EmpresaDAO.getInstancia().obtenerListaCampus();
+    public List<Empresa> obtenerlistaEmpresa() throws QueryExecutionException, QueryParseException, IOException {
+        return EmpresaDAO.getInstancia().obtenerListaEmpresas();
     }
 
-    public void crearCampus(String codigo, String nombre, int cant_puertas) throws NombreCampusInvalidoException, EmpresaConNombreExistenteException {
-        if (EmpresaDAO.getInstancia().buscarPor(nombre)) {
-            throw new EmpresaConNombreExistenteException();
+    public void crearEmpresa(Empresa empresa) throws NombreEmpresaInvalidoException, EmpresaConNombreExistenteException, EmpresaRepetidoException {
+//        if (EmpresaDAO.getInstancia().buscarPor(nombre)) {
+//            throw new EmpresaConNombreExistenteException();
+//        }
+
+        if (empresa.getNombre().length() == 0 || empresa.getNombre() == null) {
+            throw new NombreEmpresaInvalidoException();
         }
-        if (nombre.length() == 0 || nombre == null) {
-            throw new NombreCampusInvalidoException();
+
+        if (empresa.getDescripcion().length() == 0 || empresa.getDescripcion() == null) {
+            throw new NombreEmpresaInvalidoException();
         }
-        this.campus = new Empresa(nombre, codigo, cant_puertas);
+
+//        if (PuertasSERVICIO.getInstancia().getListapuertas().isEmpty()) {
+//            throw new EmpresaSinPuertasException();
+//        }
+//        if (this.empresa.getParqueaderos().isEmpty()) {
+//            throw new EmpresaVacioException();
+//        }
+//        if (EmpresaDAO.getInstancia().buscarPor(this.getEmpresa().getNombre())) {
+//            throw new EmpresaConNombreExistenteException();
+//        }
+//        this.campus.setCant_puertas(PuertasSERVICIO.getInstancia().getListapuertas().size());
+        EmpresaDAO.getInstancia().guardar(empresa);
+//        PuertasSERVICIO.getInstancia().GuardarPuertas(this.empresa.getCodigo());
+
+        this.empresa = new Empresa();
     }
 
-    public void modificarCampus(String codigo, String nombre) throws NombreCampusInvalidoException {
+    public void modificarEmpresa(String codigo, String nombre) throws NombreEmpresaInvalidoException {
         if (nombre.length() == 0 || nombre == null) {
-            throw new NombreCampusInvalidoException();
+            throw new NombreEmpresaInvalidoException();
         }
-        this.campus.setNombre(nombre);
+        this.empresa.setNombre(nombre);
     }
 
-    public void GuardarCampus(String nombre) throws EmpresaRepetidoException, EmpresaConNombreExistenteException, EmpresaVacioException, NombreCampusInvalidoException, EmpresaSinPuertasException {
+//    public void GuardarEmpresa(Empresa empresa) throws EmpresaRepetidoException, EmpresaConNombreExistenteException, EmpresaVacioException, NombreEmpresaInvalidoException, EmpresaSinPuertasException {
+//
+//        if (empresa.getNombre().length() == 0 || empresa.getNombre() == null) {
+//            throw new NombreEmpresaInvalidoException();
+//        }
+//        if (this.getEmpresa() == null) {
+//            throw new EmpresaVacioException();
+//        }
+//        if (PuertasSERVICIO.getInstancia().getListapuertas().isEmpty()) {
+//            throw new EmpresaSinPuertasException();
+//        }
+//        if (this.empresa.getParqueaderos().isEmpty()) {
+//            throw new EmpresaVacioException();
+//        }
+//        if (EmpresaDAO.getInstancia().buscarPor(this.getEmpresa().getNombre())) {
+//            throw new EmpresaConNombreExistenteException();
+//        }
+////        this.campus.setCant_puertas(PuertasSERVICIO.getInstancia().getListapuertas().size());
+//        EmpresaDAO.getInstancia().guardar(getEmpresa());
+//        PuertasSERVICIO.getInstancia().GuardarPuertas(this.empresa.getCodigo());
+//        this.empresa = null;
+//        PuertasSERVICIO.getInstancia().getListapuertas().clear();
+//        ParqueaderosSERVICIO.getInstancia().setParqueadero(null);
+//
+//    }
+    public void eliminarparqueadero(String codigo) {
+        this.empresa.getParqueaderos().remove(codigo);
+    }
 
+    public void GuardarEmpresaModificado(String nombre) throws NombreEmpresaInvalidoException, EmpresaVacioException, EmpresaSinPuertasException {
         if (nombre.length() == 0 || nombre == null) {
-            throw new NombreCampusInvalidoException();
+            throw new NombreEmpresaInvalidoException();
         }
-        if (this.getCampus() == null) {
+        if (this.getEmpresa() == null) {
             throw new EmpresaVacioException();
         }
         if (PuertasSERVICIO.getInstancia().getListapuertas().isEmpty()) {
             throw new EmpresaSinPuertasException();
         }
-        if (this.campus.getParqueaderos().isEmpty()) {
-            throw new EmpresaVacioException();
-        }
-        if (EmpresaDAO.getInstancia().buscarPor(this.getCampus().getNombre())) {
-            throw new EmpresaConNombreExistenteException();
-        }
-        this.campus.setCant_puertas(PuertasSERVICIO.getInstancia().getListapuertas().size());
-        EmpresaDAO.getInstancia().guardar(getCampus());
-        PuertasSERVICIO.getInstancia().GuardarPuertas(this.campus.getCodigo());
-        this.campus = null;
-        PuertasSERVICIO.getInstancia().getListapuertas().clear();
-        ParqueaderosSERVICIO.getInstancia().setParqueadero(null);
-
-    }
-
-    public void eliminarparqueadero(String codigo){
-        this.campus.getParqueaderos().remove(codigo);
-    }
-    public void GuardarCampusModificado(String nombre) throws NombreCampusInvalidoException, EmpresaVacioException, EmpresaSinPuertasException {
-        if (nombre.length() == 0 || nombre == null) {
-            throw new NombreCampusInvalidoException();
-        }
-        if (this.getCampus() == null) {
-            throw new EmpresaVacioException();
-        }
-        if (PuertasSERVICIO.getInstancia().getListapuertas().isEmpty()) {
-            throw new EmpresaSinPuertasException();
-        }
-        if (this.campus.getParqueaderos().isEmpty()) {
+        if (this.empresa.getParqueaderos().isEmpty()) {
             throw new EmpresaVacioException();
         }
 
-        this.campus.setCant_puertas(PuertasSERVICIO.getInstancia().getListapuertas().size());
-        EmpresaDAO.getInstancia().guardarModificado(this.campus);
-        PuertasSERVICIO.getInstancia().guardarNuevasPuertas(this.campus.getCodigo());
+//        this.campus.setCant_puertas(PuertasSERVICIO.getInstancia().getListapuertas().size());
+        EmpresaDAO.getInstancia().guardarModificado(this.empresa);
+        PuertasSERVICIO.getInstancia().guardarNuevasPuertas(this.empresa.getCodigo());
 
-        this.campus = null;
+        this.empresa = null;
         PuertasSERVICIO.getInstancia().getListapuertas().clear();
         ParqueaderosSERVICIO.getInstancia().setParqueadero(null);
     }
 
-    
-    public void eliminarCampus(String codigo) throws EmpresaNoExisteException{
+    public void eliminarEmpresa(String codigo) throws EmpresaNoExisteException {
         EmpresaDAO.getInstancia().eliminarCampus(codigo);
     }
-    public void agregarParqueadero(Parqueadero p) {
-        
-        this.campus.agregar(p);
 
-        System.out.println(">>> Parqueadero Agregado: " + this.campus.getParqueaderos().size());
+    public void agregarParqueadero(Parqueadero p) {
+
+//        this.campus.agregar(p);
+        System.out.println(">>> Parqueadero Agregado: " + this.empresa.getParqueaderos().size());
     }
 
     public List<Parqueadero> obtenerParqueaderos() {
-        List<Parqueadero> lista = new ArrayList<Parqueadero>(this.campus.getParqueaderos().values());
+        List<Parqueadero> lista = new ArrayList<Parqueadero>(this.empresa.getParqueaderos());
 
         return lista;
     }
-    
-    
 
-    /**
-     * @return the campus
-     */
-    public Empresa getCampus() {
-        return campus;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public Empresa recuperarCampus(String codigo) throws EmpresaNoExisteException, QueryParseException, QueryExecutionException {
+    public Empresa recuperarEmpresa(String codigo) throws EmpresaNoExisteException, QueryParseException, QueryExecutionException {
         return EmpresaDAO.getInstancia().obtener(codigo);
     }
 
-    public Parqueadero recuperarParqueaderoDeCampus(String codigoCampues, String codigoParqueadero) throws EmpresaNoExisteException, QueryParseException, QueryExecutionException {
-        return EmpresaDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(codigoParqueadero);
+    public Parqueadero recuperarParqueaderoDeEmpresa(String codigoCampues, String codigoParqueadero) throws EmpresaNoExisteException, QueryParseException, QueryExecutionException {
+        return EmpresaDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(Integer.parseInt(codigoParqueadero));
     }
 
-    public Puerta recuperarParqueaderoDeCampusDePuerta(String codigoCampues, String codigoParqueadero,String codigoPuerta) throws EmpresaNoExisteException, QueryParseException, QueryExecutionException {
-        for (Iterator<Puerta> iterator = EmpresaDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(codigoParqueadero).getPuertas().iterator(); iterator.hasNext();) {
+    public Puerta recuperarParqueaderoDeEmpresaDePuerta(String codigoCampues, String codigoParqueadero, String codigoPuerta) throws EmpresaNoExisteException, QueryParseException, QueryExecutionException {
+        for (Iterator<Puerta> iterator = EmpresaDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(Integer.parseInt(codigoParqueadero)).getPuertas().iterator(); iterator.hasNext();) {
             Puerta next = iterator.next();
-            if(next.getCodigo().equalsIgnoreCase(codigoPuerta))
+            if (next.getIdPuerta().equals(codigoPuerta)) {
                 return next;
+            }
         }
         return null;
 //        CampusDAO.getInstancia().obtener(codigoCampues).getParqueaderos().get(codigoParqueadero);
     }
-    
-    public void cargarCampus(String codigo) throws EmpresaNoExisteException {
+
+    public void cargarEmpresa(String codigo) throws EmpresaNoExisteException {
         try {
-            this.campus = EmpresaDAO.getInstancia().obtener(codigo);
+            this.empresa = EmpresaDAO.getInstancia().obtener(codigo);
         } catch (QueryParseException ex) {
             System.out.println("Error josql QueryParseException");
         } catch (QueryExecutionException ex) {
@@ -185,7 +198,7 @@ public class EmpresaSERVICIO {
     }
 
     public void agregarParqueaderoModificado(Parqueadero p) {
-        
+
     }
 
 }

@@ -99,7 +99,7 @@ public class UsuarioSERVICIO {
     }
 
     public void agregarCampusParqueadero(String cedula, String codigoCampus, String codigoParqueadero) throws QueryParseException, QueryExecutionException, UsuarioNoExisteException, EmpresaNoExisteException {
-	List<Puerta> puertas = EmpresaSERVICIO.getInstancia().recuperarParqueaderoDeCampus(codigoCampus, codigoParqueadero).getPuertas();
+	List<Puerta> puertas = EmpresaSERVICIO.getInstancia().recuperarParqueaderoDeEmpresa(codigoCampus, codigoParqueadero).getPuertas();
 //        UsuariosDAO.getInstancia().obtener(cedula).getTarjeta().agregarPermisos(codigoCampus, codigoParqueadero, puertas);
     }
 

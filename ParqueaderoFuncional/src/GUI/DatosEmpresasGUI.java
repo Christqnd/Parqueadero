@@ -31,50 +31,37 @@ import org.josql.QueryParseException;
  *
  * @author pablopc
  */
-public class ListaEmpresasGUI extends javax.swing.JFrame {
+public class DatosEmpresasGUI extends javax.swing.JFrame {
+
+    private static final String STRING_EMPTY = "";
 
     EmpresaSERVICIO cs = EmpresaSERVICIO.getInstancia();
-    private DefaultTableModel model1;
-    int con = 0;
+    private DefaultTableModel modeloEmpresas;
 
     /**
      * Creates new form ListaCampusGUI
      */
-    public ListaEmpresasGUI() {
+    public DatosEmpresasGUI() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/IMG/parking.png")).getImage());
         mostrarDatos();
-        alinearDatos(listacampus, listacampus.getColumnCount());
-        this.con = 0;
-    }
-
-    public void insertarDatos(Empresa c) {
-        model1.insertRow(con, new Object[]{});
-        model1.setValueAt(c.getCodigo(), con, 0);
-        model1.setValueAt(c.getNombre(), con, 1);
-        try {
-            model1.setValueAt(PuertasSERVICIO.getInstancia().verCantidadPuertas(c.getCodigo()), con, 2);
-        } catch (CodigodeCampusNoExisteException ex) {
-            System.out.println("Codigo de Campus no existe");
-        }
-        model1.setValueAt(c.getParqueaderos().size(), con, 3);
-        this.con++;
+        alinearDatos(listaEmpresas, listaEmpresas.getColumnCount());
     }
 
     public void interfazTabla() {
         String data[][] = {};
-        String col[] = {"Código", "Nombre", "Cant. Puertas", "Cant. parqueaderos"};
-        model1 = new DefaultTableModel(data, col) {
+        String col[] = {"IdEmpresa", "Código", "Nombre", "Propietario", "Descripción", "Fecha de Creación"};
+        modeloEmpresas = new DefaultTableModel(data, col) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        this.listacampus.setModel(model1);
-        listacampus.getColumnModel().getColumn(0).setResizable(false);
-        listacampus.getColumnModel().getColumn(1).setResizable(false);
-        listacampus.getColumnModel().getColumn(2).setResizable(false);
-        listacampus.getColumnModel().getColumn(3).setResizable(false);
+        this.listaEmpresas.setModel(modeloEmpresas);
+//        listaEmpresas.getColumnModel().getColumn(0).setResizable(false);
+//        listaEmpresas.getColumnModel().getColumn(1).setResizable(false);
+//        listaEmpresas.getColumnModel().getColumn(2).setResizable(false);
+//        listaEmpresas.getColumnModel().getColumn(3).setResizable(false);
 
     }
 
@@ -82,16 +69,22 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
         try {
             this.interfazTabla();
             List<Empresa> lista = new ArrayList();
-            lista = cs.obtenerlistaCampus();
-            for (int i = 0; i < lista.size(); i++) {
-                this.insertarDatos(lista.get(i));
+            lista = cs.obtenerlistaEmpresa();
+            for (Empresa e : lista) {
+                Long idEmpresa = e.getIdEmpresa();
+                String codigo = e.getCodigo();
+                String nombre = e.getNombre();
+                String propietario = e.getPropietario();
+                String descripcion = e.getDescripcion();
+                String fechaCreacion = e.getFechaCreacion().toString();
+                modeloEmpresas.addRow(new Object[]{idEmpresa, codigo, nombre, propietario, descripcion, fechaCreacion});
             }
         } catch (QueryExecutionException ex) {
-            Logger.getLogger(ListaEmpresasGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatosEmpresasGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (QueryParseException ex) {
-            Logger.getLogger(ListaEmpresasGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatosEmpresasGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ListaEmpresasGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatosEmpresasGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -104,29 +97,35 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dateComponentFormatter1 = new org.jdatepicker.DateComponentFormatter();
         jPanel1 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listacampus = new javax.swing.JTable();
+        listaEmpresas = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
 
-        setMinimumSize(new java.awt.Dimension(430, 460));
+        setMinimumSize(new java.awt.Dimension(1005, 630));
         setSize(new java.awt.Dimension(1005, 630));
         getContentPane().setLayout(null);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Listado de Parqueaderos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel1.setOpaque(false);
 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/add-new-32x32-1214356.png"))); // NOI18N
         jButton5.setText("Agregar +");
+        jButton5.setMaximumSize(new java.awt.Dimension(108, 38));
+        jButton5.setMinimumSize(new java.awt.Dimension(108, 38));
+        jButton5.setPreferredSize(new java.awt.Dimension(70, 23));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/reload-32x32-1214297.png"))); // NOI18N
         jButton4.setText("Modificar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +133,7 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/minus-32x32-1214312.png"))); // NOI18N
         jButton3.setText("Quitar -");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -141,6 +141,7 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/login-32x32-1214657.png"))); // NOI18N
         jButton2.setText("Aceptar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,35 +149,20 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
             }
         });
 
-        listacampus.setModel(new javax.swing.table.DefaultTableModel(
+        listaEmpresas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo", "Nombre", "Puertas", "Parqueaderos"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(listacampus);
-        if (listacampus.getColumnModel().getColumnCount() > 0) {
-            listacampus.getColumnModel().getColumn(0).setResizable(false);
-            listacampus.getColumnModel().getColumn(1).setResizable(false);
-            listacampus.getColumnModel().getColumn(2).setResizable(false);
-            listacampus.getColumnModel().getColumn(3).setResizable(false);
+        ));
+        jScrollPane1.setViewportView(listaEmpresas);
+        if (listaEmpresas.getColumnModel().getColumnCount() > 0) {
+            listaEmpresas.getColumnModel().getColumn(0).setResizable(false);
+            listaEmpresas.getColumnModel().getColumn(1).setResizable(false);
+            listaEmpresas.getColumnModel().getColumn(2).setResizable(false);
+            listaEmpresas.getColumnModel().getColumn(3).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -184,37 +170,38 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(jButton5)
+                .addGap(15, 15, 15)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 558, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addContainerGap())
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(15, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(19, 19, 19)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(519, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(501, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5)
-                    .addComponent(jButton4)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton3)
-                        .addComponent(jButton2)))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(49, Short.MAX_VALUE)))
+                    .addGap(16, 16, 16)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(65, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPanel1);
@@ -244,14 +231,14 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        int index = this.listacampus.getSelectedRow();
+        int index = this.listaEmpresas.getSelectedRow();
         if (index < 0) {
             JOptionPane.showMessageDialog(this, "Seleccione un Campus");
         } else {
             try {
-                String codigo = (String) this.listacampus.getValueAt(index, 0);
+                String codigo = (String) this.listaEmpresas.getValueAt(index, 0);
                 cs.setModificar(true);
-                cs.cargarCampus(codigo);
+                cs.cargarEmpresa(codigo);
 
                 PuertasDAO.getInstancia().mostrar();
                 PuertasSERVICIO.getInstancia().CargarPuertas(codigo);
@@ -269,14 +256,13 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             // TODO add your handling code here:
-            int index = this.listacampus.getSelectedRow();
+            int index = this.listaEmpresas.getSelectedRow();
             if (index < 0) {
                 JOptionPane.showMessageDialog(this, "Seleccione un campus");
             } else {
-                String codigo = (String) this.listacampus.getValueAt(index, 0);
-                EmpresaSERVICIO.getInstancia().eliminarCampus(codigo);
+                String codigo = (String) this.listaEmpresas.getValueAt(index, 0);
+                EmpresaSERVICIO.getInstancia().eliminarEmpresa(codigo);
                 this.mostrarDatos();
-                this.con = 0;
             }
         } catch (EmpresaNoExisteException ex) {
             JOptionPane.showMessageDialog(this, "El Campus se ha Eliminado");
@@ -300,26 +286,29 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListaEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DatosEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListaEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DatosEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListaEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DatosEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListaEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DatosEmpresasGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListaEmpresasGUI().setVisible(true);
+                new DatosEmpresasGUI().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.jdatepicker.DateComponentFormatter dateComponentFormatter1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -327,21 +316,21 @@ public class ListaEmpresasGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable listacampus;
+    private javax.swing.JTable listaEmpresas;
     // End of variables declaration//GEN-END:variables
 
     private void alinearDatos(JTable tabla, int numeroColumnas) {
         DefaultTableCellRenderer AlinearDatos = new DefaultTableCellRenderer();
         AlinearDatos.setHorizontalAlignment(SwingConstants.CENTER);//.LEFT .RIGHT .CENTER
-
         DefaultTableCellRenderer AlinearHeader = new DefaultTableCellRenderer();
         AlinearHeader.setHorizontalAlignment(SwingConstants.CENTER);//.LEFT .RIGHT .CENTER
         AlinearHeader.setVerticalAlignment(SwingConstants.CENTER);
-        AlinearHeader.setBackground(Color.LIGHT_GRAY);
+        AlinearHeader.setBackground(Color.DARK_GRAY);
         AlinearHeader.setForeground(Color.white);
         JTableHeader header = tabla.getTableHeader();
         header.setDefaultRenderer(AlinearHeader);
         tabla.setTableHeader(header);
+        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         for (int i = 0; i < numeroColumnas; i++) {
             tabla.getColumnModel().getColumn(i).setCellRenderer(AlinearDatos);
         }

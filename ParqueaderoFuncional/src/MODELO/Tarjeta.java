@@ -78,8 +78,8 @@ public class Tarjeta implements java.io.Serializable {
             if (this.permisosPP.containsKey(keyparqueadero)) {
                 for (Iterator<Puerta> p = puertas.iterator(); p.hasNext();) {
                     Puerta puerta = p.next();
-                    permisosPP.get(keyparqueadero).add(puerta.getCodigo());
-                    permisosPT.put(puerta.getCodigo(), puerta.getTipoDePuerta().estadoPuerta());
+                    permisosPP.get(keyparqueadero).add(puerta.getIdPuerta().toString());
+                    permisosPT.put(puerta.getIdPuerta().toString(), puerta.getTipo());
                 }
             }
 ///////////////////////////////////////////////////////////////////////////////////////////////////

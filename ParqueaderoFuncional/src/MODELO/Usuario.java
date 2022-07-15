@@ -23,11 +23,6 @@ public class Usuario implements java.io.Serializable {
     private String cedula;
     private String telefono;
     private String estado;
-//    private Tarjeta tarjeta;
-//    private Tarifa tarifa;
-//    private List<Factura> facturas;
-
-//    private Long idUsuario;
     private List<Vehiculo> vehiculos;
 
     public Usuario(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, String apellido, String cedula, String telefono, String estado) {
@@ -236,10 +231,10 @@ public class Usuario implements java.io.Serializable {
         return string;
 
     }
-    
-        public String toJSONUpdate() {
-        String string = 
-                "{\"id\": " + this.id
+
+    public String toJSONUpdate() {
+        String string
+                = "{\"id\": " + this.id
                 + " , \"primerNombre\": \"" + this.primerNombre + "\", \"segundoNombre\": \"" + this.segundoNombre
                 + "\", \"primerApellido\": \"" + this.primerApellido + "\", \"segundoApellido\": \"" + this.segundoApellido
                 + "\", \"cedula\": \"" + this.cedula + "\", \"telefono\": \"" + this.telefono + "\", \"estado\": \"" + this.estado + "\", \"vehiculos\": [";

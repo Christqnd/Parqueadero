@@ -54,7 +54,7 @@ public class DatosParqueaderoGUI extends javax.swing.JFrame {
             this.capsilder.setValue(ps.getParqueadero().getCapacidad());
         } else {
             this.codparqlbl.setText(CodigosSERVICIO.getInstancia().generarCodigo("PA"));
-            this.numparqlbl.setText(Integer.toString(cs.getCampus().getParqueaderos().size() + 1));
+            this.numparqlbl.setText(Integer.toString(cs.getEmpresa().getParqueaderos().size() + 1));
             pus.separarListas();
         }
 
@@ -87,14 +87,14 @@ public class DatosParqueaderoGUI extends javax.swing.JFrame {
         lista = pus.getListapuertasentrada();
         for (Puerta p : lista) {
             String valor = null;
-            if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada")) {
+            if (p.getTipo().equalsIgnoreCase("entrada")) {
                 valor = "Entrada";
-            } else if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("salida")) {
+            } else if (p.getTipo().equalsIgnoreCase("salida")) {
                 valor = "Salida";
-            } else if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")) {
+            } else if (p.getTipo().equalsIgnoreCase("entrada/salida")) {
                 valor = "E / S";
             }
-            modeltablaentradadisp.addRow(new Object[]{p.getCodigo(), p.getNumero(), p.getUbicacion(), valor});
+            modeltablaentradadisp.addRow(new Object[]{p.getIdPuerta(), p.getNumero(), p.getDescripcion(), valor});
         }
     }
 
@@ -104,14 +104,14 @@ public class DatosParqueaderoGUI extends javax.swing.JFrame {
         lista = pus.getListapuertasalida();
         for (Puerta p : lista) {
             String valor = null;
-            if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada")) {
+            if (p.getTipo().equalsIgnoreCase("entrada")) {
                 valor = "Entrada";
-            } else if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("salida")) {
+            } else if (p.getTipo().equalsIgnoreCase("salida")) {
                 valor = "Salida";
-            } else if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")) {
+            } else if (p.getTipo().equalsIgnoreCase("entrada/salida")) {
                 valor = "E / S";
             }
-            modeltablasalidadisp.addRow(new Object[]{p.getCodigo(), p.getNumero(), p.getUbicacion(), valor});
+            modeltablasalidadisp.addRow(new Object[]{p.getIdPuerta(), p.getNumero(), p.getDescripcion(), valor});
         }
     }
 
@@ -122,14 +122,14 @@ public class DatosParqueaderoGUI extends javax.swing.JFrame {
         for (Puerta p : lista) {
 
             String valor = null;
-            if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada")) {
+            if (p.getTipo().equalsIgnoreCase("entrada")) {
                 valor = "Entrada";
-            } else if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("salida")) {
+            } else if (p.getTipo().equalsIgnoreCase("salida")) {
                 valor = "Salida";
-            } else if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")) {
+            } else if (p.getTipo().equalsIgnoreCase("entrada/salida")) {
                 valor = "E / S";
             }
-            modeltablaentradaparq.addRow(new Object[]{p.getCodigo(), p.getNumero(), p.getUbicacion(), valor});
+            modeltablaentradaparq.addRow(new Object[]{p.getIdPuerta(), p.getNumero(), p.getDescripcion(), valor});
         }
     }
 
@@ -139,14 +139,14 @@ public class DatosParqueaderoGUI extends javax.swing.JFrame {
         lista = ps.getPuertassalida();
         for (Puerta p : lista) {
             String valor = null;
-            if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada")) {
+            if (p.getTipo().equalsIgnoreCase("entrada")) {
                 valor = "Entrada";
-            } else if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("salida")) {
+            } else if (p.getTipo().equalsIgnoreCase("salida")) {
                 valor = "Salida";
-            } else if (p.getTipoDePuerta().estadoPuerta().equalsIgnoreCase("entrada/salida")) {
+            } else if (p.getTipo().equalsIgnoreCase("entrada/salida")) {
                 valor = "E / S";
             }
-            modeltablasalidaparq.addRow(new Object[]{p.getCodigo(), p.getNumero(), p.getUbicacion(), valor});
+            modeltablasalidaparq.addRow(new Object[]{p.getIdPuerta(), p.getNumero(), p.getDescripcion(), valor});
         }
     }
 

@@ -5,83 +5,128 @@
  */
 package MODELO;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
  *
  * @author gube
  */
-public class Empresa implements java.io.Serializable{
-    private String nombre;
+public class Empresa implements java.io.Serializable {
+
+    private Long idEmpresa;
     private String codigo;
-    private int Cant_puertas=0;
-    private Map<String,Parqueadero> parqueaderos=new HashMap();
+    private String nombre;
+    private String descripcion;
+    private String propietario;
+    private String estado;
+    private Date fechaCreacion;
+    private List<Parqueadero> parqueaderos;
 
-    public Empresa(String nombre, String codigo, int cant_puertas){
-        this.nombre = nombre;
+    public Empresa() {
+        super();
+        this.codigo = "";
+        this.nombre = "";
+        this.descripcion = "";
+        this.propietario = "";
+        this.estado = "A";
+        this.fechaCreacion = new Date();
+        this.parqueaderos = new LinkedList<>();
+
+    }
+
+    public Empresa(Long idEmpresa, String codigo, String nombre, String descripcion, String propietario, String estado, Date fechaCreacion, List<Parqueadero> parqueaderos) {
+        super();
+        this.idEmpresa = idEmpresa;
         this.codigo = codigo;
-        this.Cant_puertas=cant_puertas;
-    }    
-
-    @Override
-    public String toString() {
-        return this.getCodigo()+", "+this.getNombre()+", "+this.getCant_puertas();
-    }    
-
-    /**
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
         this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.propietario = propietario;
+        this.estado = estado;
+        this.fechaCreacion = fechaCreacion;
+        this.parqueaderos = parqueaderos;
+    }
+    
+    
+        public Empresa( String codigo, String nombre, String descripcion, String propietario, List<Parqueadero> parqueaderos) {
+        super();
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.propietario = propietario;
+        this.estado = "A";
+        this.fechaCreacion = new Date();
+        this.parqueaderos = parqueaderos;
     }
 
-    /**
-     * @return the codigo
-     */
+    public Long getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Long idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
+
     public String getCodigo() {
         return codigo;
     }
 
-    /**
-     * @param codigo the codigo to set
-     */
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
-    /**
-     * @return the Cant_puertas
-     */
-    public int getCant_puertas() {
-        return Cant_puertas;
+    public String getNombre() {
+        return nombre;
     }
 
-    /**
-     * @param Cant_puertas the Cant_puertas to set
-     */
-    public void setCant_puertas(int Cant_puertas) {
-        this.Cant_puertas = Cant_puertas;
-    }
-    
-    public void agregar(Parqueadero p){
-        this.getParqueaderos().put(p.getCodigo(), p);
-    }
-    public Parqueadero obtener(String clave){
-        return this.getParqueaderos().get(clave);
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    /**
-     * @return the parqueaderos
-     */
-    public Map<String,Parqueadero> getParqueaderos() {
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(String propietario) {
+        this.propietario = propietario;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public List<Parqueadero> getParqueaderos() {
         return parqueaderos;
     }
+
+    public void setParqueaderos(List<Parqueadero> parqueaderos) {
+        this.parqueaderos = parqueaderos;
+    }
+    
+
+    
 }
